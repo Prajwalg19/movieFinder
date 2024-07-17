@@ -19,17 +19,17 @@ const Login = () => {
         email: "",
         password: "",
     }
-    async function onSubmit(value: typeof formData) {
+    async function handleSubmit(value: typeof formData) {
         setLoading(true);
         toast.dismiss();
         try {
             const response = await axios.post("/auth/login", {
                 password: value.password,
-                userId: value.email.trim()
+                email: value.email.trim()
             })
             dispatch(loginSuccess(response.data));
             toast.success("Login Successfull")
-            navigate("/");
+            navigate("/landing");
 
         } catch (e: unknown) {
             console.log(e)
@@ -66,11 +66,11 @@ const Login = () => {
                         </span>
                     </span>
                 </span>
-                <Formik initialValues={formData} onSubmit={onSubmit} validationSchema={loginSchema}>
+                <Formik initialValues={formData} onSubmit={handleSubmit} validationSchema={loginSchema}>
                     {({handleSubmit, handleChange, errors, touched, values, handleBlur}) => (
                         <form className="flex-1 flex flex-col" onSubmit={handleSubmit}>
                             <div className="h-[5.5rem]">
-                                <Label value="Email" />
+                                <Label value="email" />
                                 <TextInput placeholder="example@gmail.com" type="text" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} />
                                 {touched.email && errors.email ? <span className="text-red-500 text-xs">{errors.email}</span> : null}
                             </div>
@@ -81,7 +81,7 @@ const Login = () => {
                             </div>
                             <div className="flex flex-col gap-3 justify-center">
                                 <Button gradientDuoTone="pinkToOrange" type="submit" disabled={loading}>
-                                    {!loading ? (<div className="font-bold text-base">Login</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
+                                    {!loading ? (<div className="font-semibold text-base">Login</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
                                 </Button>
                                 <span className="text-sm">Don&apos;t Have An Account? <Link className="text-teal-500" to="/register">Register here</Link></span>
 

@@ -6,6 +6,7 @@ import {extendedError} from "./utils/customError";
 import authRoutes from "./routes/authRoutes"
 import cookieParser from "cookie-parser"
 import morgan from "morgan";
+import movieRoutes from "./routes/movieRoutes"
 
 dotenv.config();
 
@@ -31,11 +32,9 @@ mongoose.connect(mongo_con_string).then(
 app.listen(port, () => {
     console.log("Server started at port", port)
 })
-app.use('/', (req, res) => {
-    res.send("Hi from the api");
-})
 
 app.use("/auth", authRoutes)
+app.use("/movie", movieRoutes)
 
 app.use((error: extendedError, req: express.Request, res: express.Response, next: express.NextFunction) => {
     const statusCode = error.statusCode || 500;

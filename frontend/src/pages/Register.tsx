@@ -16,16 +16,14 @@ const Register = () => {
         email: "",
         password: "",
         userName: "",
-        role: ""
     }
     async function onSubmit(value: typeof formData) {
         setLoading(true);
         try {
             await axios.post("/auth/register", {
-                role: "Viewer",
-                userName: value.userName.trim(),
+                email: value.email.trim(),
                 password: value.password,
-                userId: value.email.trim()
+                userName: value.userName
             })
             navigate("/login");
             toast.success("User created successfully")
@@ -51,7 +49,7 @@ const Register = () => {
     return (
         <main className="min-h-screen w-full flex justify-center -mt-20 items-center">
             <div className="max-w-4xl w-full p-3 gap-14 md:gap-0 mx-auto flex md:flex-row flex-col md:items-center">
-                <span className="flex flex-1 flex-row items-center gap-3">
+                <span className="flex flex-1 flex-row items-center gap-3 justify-center md:justify-start">
                     <img src="/movie.jpg" alt="Icon" className="w-auto h-16" />
                     <span className="flex flex-col items-start justify-center">
                         <span className="text-sm md:text-md text-wrap block">My Movie Finder</span>
@@ -69,7 +67,7 @@ const Register = () => {
 
                             <div className="h-[5.5rem]">
                                 <Label value="Email" />
-                                <TextInput placeholder="Email" type="text" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} />
+                                <TextInput placeholder="Email" type="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} />
                                 {touched.email && errors.email ? <span className="text-red-500 text-xs">{errors.email}</span> : null}
                             </div>
                             <div className="h-[6rem]">
@@ -79,7 +77,7 @@ const Register = () => {
                             </div>
                             <div className="flex flex-col gap-3 justify-center">
                                 <Button gradientDuoTone="pinkToOrange" type="submit" disabled={loading}>
-                                    {!loading ? (<div>Register</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
+                                    {!loading ? (<div className="font-semibold">Register</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
                                 </Button>
                                 <span className="text-sm">Have an account? <Link className="text-teal-500" to="/login">Login here</Link></span>
 

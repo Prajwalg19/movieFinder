@@ -1,22 +1,49 @@
-import Drawer from "@/components/SideBar";
-
+import {useEffect, useState} from "react";
+import axios from "../utils/axios";
+import toast from "react-hot-toast";
+import {AxiosError} from "axios";
+import {Spinner} from "flowbite-react";
+import Carousel from "../components/Carousel"
 export default function LandingPage() {
+    const [loading, setLoading] = useState(true);
+    const [carouselData, setCarouselData] = useState([]);
+    useEffect(() => {
+        async function fetchCarouselData() {
+            try {
+
+                // const response = await axios.get(``);
+                // setCarouselData(response.data);
+                setLoading(false);
+            } catch (e: unknown) {
+                if (e instanceof AxiosError && e.response) {
+                    if (e.response.status == 400) {
+                        toast.error("Bad request");
+                    }
+                    else if (e.response.status == 404) {
+                        toast.error("Request Not Found");
+                    } else if (e.response.status == 403) {
+                        toast.error("User not logged in");
+                    }
+                } else {
+                    toast.error("Something went wrong");
+                }
+                setLoading(false);
+            }
+        }
+        fetchCarouselData();
+    }, [])
+
+    if (loading) {
+        return (
+            <div className="min-h-screen h-full w-full flex justify-center items-center">
+                <Spinner size="xl" />
+            </div>
+        )
+    }
+
     return (
-        <div className="flex flex-row">
-            <Drawer />
-            <main className="w-full">
-                <div className="p-4">
-                    <div className="rounded-md border-purple-600 border-2 w-full p-4">
-                        <span className="text-3xl">Welcome to <span className="text-red-500">House Finder</span></span>
-                        <span className="flex flex-col mt-10">
-                            <br />
-                            <span>Browse movies, add them to watchlist and share them with friends </span>
-                            <br />
-                            <span>Just click the plus to add a movie to see more details to mark the movie as watched</span>
-                        </span>
-                    </div>
-                </div>
-            </main>
+        <div className="">
+            <Carousel />
         </div>
     )
 }

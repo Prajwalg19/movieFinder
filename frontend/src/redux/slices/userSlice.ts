@@ -4,7 +4,8 @@ type typeOfInitState = {
     currentUser: null | {
         userName: string,
         email: string,
-        _id: string
+        _id: string,
+        userPfp: string,
     },
 }
 

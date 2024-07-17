@@ -1,4 +1,4 @@
-import {Spinner, TextInput} from "flowbite-react";
+import {Spinner} from "flowbite-react";
 import {Label} from "flowbite-react";
 import {Button} from "flowbite-react";
 import {Formik} from "formik";
@@ -53,37 +53,38 @@ const Login = () => {
 
     }
     return (
-        <main className="min-h-screen w-full flex justify-center -mt-20 items-center">
-            <div className="max-w-2xl p-3 gap-14 mx-auto flex flex-col justify-center w-full">
+        <main className="min-h-screen h-full w-full flex justify-center -mt-20 items-center">
+            <img src="/bg_poster.jpg" className="object-cover w-full h-full -z-10 left-0 top-0 fixed " alt="backgournd poster" />
+            <div className="max-w-2xl gap-14 md:mx-auto flex flex-col justify-center w-full bg-black/50 mx-3 rounded-xl p-10 border border-white/30">
                 <span className="flex-1 whitespace-nowrap px-2 py-1 gap-4 flex flex-col items-center justify-center md:items-start">
                     <span className="text-2xl gap-2 flex flex-row items-center justify-center w-full">
                         <span className="flex flex-row items-center gap-3">
-                            <img src="/movie.jpg" alt="Icon" className="w-auto h-16" />
-                            <span className="flex flex-col items-start justify-center">
-                                <span className="text-sm md:text-md text-wrap block">My Movie Finder</span>
-                                <span className="text-xs font-light">Bing read movies</span>
+                            <img src="/movie.png" alt="Icon" className="w-auto h-16" />
+                            <span className="flex flex-col items-start justify-center text-white">
+                                <span className="md:text-lg text-md text-wrap">My Movie Finder</span>
+                                <span className="text-sm">Bing read movies</span>
                             </span>
                         </span>
                     </span>
                 </span>
                 <Formik initialValues={formData} onSubmit={handleSubmit} validationSchema={loginSchema}>
                     {({handleSubmit, handleChange, errors, touched, values, handleBlur}) => (
-                        <form className="flex-1 flex flex-col" onSubmit={handleSubmit}>
+                        <form className="flex-1 flex flex-col gap-8" onSubmit={handleSubmit}>
                             <div className="h-[5.5rem]">
-                                <Label value="email" />
-                                <TextInput placeholder="example@gmail.com" type="text" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} />
-                                {touched.email && errors.email ? <span className="text-red-500 text-xs">{errors.email}</span> : null}
+                                <Label value="Email" className="text-white text-lg" />
+                                <input placeholder="example@gmail.com" type="text" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
+                                {touched.email && errors.email ? <span className="text-red-500 text-sm">{errors.email}</span> : null}
                             </div>
                             <div className="h-[6rem]">
-                                <Label value="Password" />
-                                <TextInput placeholder="Password" onBlur={handleBlur} value={values.password} type="password" id="password" onChange={handleChange} />
-                                {touched.password && errors.password ? <span className="text-red-500 text-xs">{errors.password}</span> : null}
+                                <Label value="Password" className="text-white text-lg" />
+                                <input placeholder="Password" onBlur={handleBlur} value={values.password} type="password" id="password" onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
+                                {touched.password && errors.password ? <span className="text-red-500 text-sm">{errors.password}</span> : null}
                             </div>
                             <div className="flex flex-col gap-3 justify-center">
-                                <Button gradientDuoTone="pinkToOrange" type="submit" disabled={loading}>
-                                    {!loading ? (<div className="font-semibold text-base">Login</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
+                                <Button className="!bg-red-700 hover:!bg-red-800" type="submit" disabled={loading}>
+                                    {!loading ? (<div className="font-semibold text-base ">Login</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
                                 </Button>
-                                <span className="text-sm">Don&apos;t Have An Account? <Link className="text-teal-500" to="/register">Register here</Link></span>
+                                <span className="text-sm text-white">Don&apos;t Have An Account? <Link className="text-red-500" to="/register">Register here</Link></span>
 
                             </div>
                         </form>

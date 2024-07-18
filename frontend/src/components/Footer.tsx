@@ -6,13 +6,16 @@ export default function Footer() {
         <footer className="text-base w-full mt-32 px-4 lg:px-8 py-8 border-t-2 border-red-700 text-gray-600 dark:text-gray-300/90">
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center lg:items-start justify-between">
                 <section className="flex flex-col items-center lg:items-start gap-5">
-                    <img src="/movie.png" alt="icon" className="h-6 w-auto" />
+                    <div className="font-clashSemiBold flex gap-3 items-center">
+                        <img src="/movie.png" alt="icon" className="h-6 w-auto" />
+                        <p><span className="text-red-700">Movie</span><span> Finder</span></p>
+                    </div>
                     <div className="font-clashRegular tracking-wider flex items-center gap-3">
-                        <BiSolidMessageDetail className="text-xl text-red-600" />
+                        <BiSolidMessageDetail className="text-xl text-red-700" />
                         <a href="mailto:prajw4l.g@gmail.com">prajw4l.g@gmail.com</a>
                     </div>
                     <div className="font-clashRegular tracking-wider flex items-center gap-3">
-                        <FaPhone className="text-xl text-red-600" />
+                        <FaPhone className="text-xl text-red-700" />
                         <p>+91 7975158795</p>
                     </div>
                 </section>

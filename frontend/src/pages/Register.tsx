@@ -47,7 +47,7 @@ const Register = () => {
 
     }
     return (
-        <main className="min-h-screen h-full w-full flex justify-center -mt-20 items-center">
+        <main className="min-h-screen h-full w-full flex justify-center -mt-20 items-center font-clashSemiBold">
             <img src="/bg_poster.jpg" className="object-cover w-full h-full -z-10 left-0 top-0 fixed " alt="backgournd poster" />
             <div className="max-w-xl gap-14 md:mx-auto flex flex-col justify-center w-full bg-black/50 mx-3 rounded-xl p-10 border border-white/30">
                 <span className="flex-1 whitespace-nowrap px-2 py-1 gap-4 flex flex-col items-center justify-center md:items-start">
@@ -55,8 +55,8 @@ const Register = () => {
                         <span className="flex flex-row items-center gap-3">
                             <img src="/movie.png" alt="Icon" className="w-auto h-16" />
                             <span className="flex flex-col items-start justify-center text-white">
-                                <span className="md:text-lg text-md text-wrap block">My Movie Finder</span>
-                                <span className="text-sm">Bing read movies</span>
+                                <span className="text-nowrap"><span className="text-red-600">Movie</span> Finder</span>
+                                <span className="text-sm tracking-wider font-semibold font-clashRegular">Bing read movies</span>
                             </span>
                         </span>
                     </span>
@@ -72,12 +72,12 @@ const Register = () => {
 
                             <div className="h-[5.5rem]">
                                 <Label value="Email" className="text-lg text-white" />
-                                <input placeholder="Email" type="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
+                                <input placeholder="example@gmail.com" type="email" id="email" value={values.email} onBlur={handleBlur} onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
                                 {touched.email && errors.email ? <span className="text-red-500 text-xs">{errors.email}</span> : null}
                             </div>
                             <div className="h-[6rem]">
                                 <Label value="Password" className="text-lg text-white" />
-                                <input placeholder="Password" onBlur={handleBlur} value={values.password} type="password" id="password" onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
+                                <input placeholder="********" onBlur={handleBlur} value={values.password} type="password" id="password" onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
                                 {touched.password && errors.password ? <span className="text-red-500 text-xs">{errors.password}</span> : null}
                             </div>
                             <div className="flex flex-col gap-3 justify-center">

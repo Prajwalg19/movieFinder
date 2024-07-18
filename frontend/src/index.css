@@ -13,27 +13,27 @@ body {
 
 @font-face {
   font-family: 'clash-display-bold';
-  src: url('../public/Fonts/ClashDisplay-Bold.otf') format('woff2');
+  src: url('/Fonts/ClashDisplay-Bold.otf') format('woff2');
   font-weight: 700;
   font-style: bold;
 }
 
 @font-face {
   font-family: 'clash-display-regular';
-  src: url('../public/Fonts/ClashDisplay-Regular.otf') format('woff2');
+  src: url('/Fonts/ClashDisplay-Regular.otf') format('woff2');
   font-weight: 400;
   font-style: base;
 }
 @font-face {
   font-family: 'clash-display-light';
-  src: url('../public/Fonts/ClashDisplay-Light.otf') format('woff2');
+  src: url('/Fonts/ClashDisplay-Light.otf') format('woff2');
   font-weight: 500;
   font-style: medium;
 }
 
 @font-face {
   font-family: 'clash-display-semibold';
-  src: url('../public/Fonts/ClashDisplay-Semibold.otf') format('woff2');
+  src: url('/Fonts/ClashDisplay-Semibold.otf') format('woff2');
   font-weight: 600;
   font-style: semibold;
 }

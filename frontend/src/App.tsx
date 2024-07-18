@@ -11,15 +11,15 @@ import {RootState} from "./redux/store"
 import {FaMoon} from "react-icons/fa6";
 import {FaSun} from "react-icons/fa6";
 import {changeTheme} from "@/redux/slices/themeSlice";
+import Footer from "@/components/Footer"
 
 function App() {
-    const user = useSelector((store: RootState) => store.user)
     const dispatch = useDispatch();
     const currentTheme = useSelector((store: RootState) => store.theme.themeState)
     return (
         <BrowserRouter>
-            {user.currentUser ? <Header /> : null}
-            <button className="transition-all border border-black/10 bg-slate-50 dark:bg-gray-950 dark:border-slate-600 opacity-90 px-3 py-3 rounded-full fixed bottom-10 right-10" onClick={() => dispatch(changeTheme())}>{currentTheme == "dark" ? <FaMoon className="text-black" /> : (<FaSun />)}</button>
+            <Header />
+            <button className="transition-all border border-black/10 bg-slate-50 dark:bg-gray-950 dark:border-slate-600 opacity-90 px-3 py-3 rounded-full fixed bottom-10 z-50 right-10" onClick={() => dispatch(changeTheme())}>{currentTheme == "dark" ? <FaMoon className="text-black" /> : (<FaSun />)}</button>
 
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -32,6 +32,7 @@ function App() {
                     <Route path="/wishlist" element={<Wishlist />} />
                 </Route>
             </Routes>
+            <Footer />
         </BrowserRouter>
     )
 }

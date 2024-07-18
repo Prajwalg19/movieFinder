@@ -7,7 +7,14 @@ export default {
         flowbite.content(),
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                clashBold: ['clash-display-bold', 'sans-serif'],
+                clashRegular: ['clash-display-regular', 'sans-serif'],
+                clashMedium: ['clash-display-medium', 'sans-serif'],
+                clashSemiBold: ['clash-display-semibold', 'sans-serif']
+            },
+        },
     },
     plugins: [
         flowbite.plugin(),

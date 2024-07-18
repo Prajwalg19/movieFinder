@@ -22,8 +22,7 @@ const Header = () => {
             <Navbar.Brand as={Link} to="/" className="text-xl font-bold flex flex-row items-center gap-4">
                 <img src="/movie.png" alt="Icon" className="w-auto h-12" />
                 <span className="flex flex-col items-start justify-center">
-                    <span className="text-sm md:text-md text-wrap block">My Movie Finder</span>
-                    <span className="text-xs font-normal">Bing read movies</span>
+                    <span className="text-sm md:text-md text-wrap flex items-center gap-1 font-clashSemiBold"> <p className="text-red-600">Movie</p>Finder</span>
                 </span>
 
             </Navbar.Brand>
@@ -61,7 +60,7 @@ const Header = () => {
                 {
                     currentUser ? (
                         <>
-                            <Navbar.Link active={location.pathname == "/myblogs"} as={Link} to="/myblogs">My wishlists</Navbar.Link>
+                            <Navbar.Link active={location.pathname == "/myblogs"} as={Link} to="/k"></Navbar.Link>
                         </>
 
                     ) : null

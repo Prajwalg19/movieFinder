@@ -40,7 +40,6 @@ export default function LandingPage() {
             </div>
         )
     }
-
     return (
         <div className="">
             <Carousel />

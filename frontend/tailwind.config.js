@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import * as flowbite from "flowbite-react/tailwind"
 export default {
+    darkMode: 'selector',
     content: [
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",

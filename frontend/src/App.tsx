@@ -6,13 +6,21 @@ import Wishlist from "./pages/Wishlist"
 import LandingPage from "./pages/Landingpage"
 import PrivateRoute from "./components/PrivateRoute"
 import Header from "./components/Header"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {RootState} from "./redux/store"
+import {FaMoon} from "react-icons/fa6";
+import {FaSun} from "react-icons/fa6";
+import {changeTheme} from "@/redux/slices/themeSlice";
+
 function App() {
     const user = useSelector((store: RootState) => store.user)
+    const dispatch = useDispatch();
+    const currentTheme = useSelector((store: RootState) => store.theme.themeState)
     return (
         <BrowserRouter>
             {user.currentUser ? <Header /> : null}
+            <button className="transition-all border border-black/10 bg-slate-50 dark:bg-gray-950 dark:border-slate-600 opacity-90 px-3 py-3 rounded-full fixed bottom-10 right-10" onClick={() => dispatch(changeTheme())}>{currentTheme == "dark" ? <FaMoon className="text-black" /> : (<FaSun />)}</button>
+
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />

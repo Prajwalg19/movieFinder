@@ -21,8 +21,7 @@ export default function Footer() {
                     <p className="text-3xl font-clashSemiBold">Links</p>
                     <p>Home</p>
                     <p>About Us</p>
-                    <p>Bookings</p>
-                    <p>Blog</p>
+                    <p>Contacts</p>
                 </section>
 
                 <section className="font-clashRegular tracking-wider flex flex-col items-center lg:items-start gap-5">

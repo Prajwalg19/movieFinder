@@ -29,7 +29,7 @@ const Login = () => {
             })
             dispatch(loginSuccess(response.data));
             toast.success("Login Successfull")
-            navigate("/landing");
+            navigate("/home");
 
         } catch (e: unknown) {
             console.log(e)

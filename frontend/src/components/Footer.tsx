@@ -3,7 +3,7 @@ import {FaPhone} from "react-icons/fa6";
 
 export default function Footer() {
     return (
-        <footer className="text-base w-full mt-32 px-4 lg:px-8 py-8 border-t-2 border-red-700 text-gray-600 dark:text-gray-300/90">
+        <footer className="text-base w-full mt-32 bg-slate-50 px-4 lg:px-8 py-8 border-t-2 border-red-700 text-gray-600 dark:bg-black dark:text-gray-300/90">
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center lg:items-start justify-between">
                 <section className="flex flex-col items-center lg:items-start gap-5">
                     <div className="font-clashSemiBold flex gap-3 items-center">

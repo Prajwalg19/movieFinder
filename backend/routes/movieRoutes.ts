@@ -1,9 +1,9 @@
 import express from "express";
-import {login, register} from "../controllers/authController";
+import {addtowish, getMovie} from "../controllers/movieController";
 const route = express.Router();
 
-route.get("/getmovie", register);
-route.post("/addtowish", login)
+route.get("/getmovie", getMovie);
+route.post("/addtowish", addtowish)
 //http://www.omdbapi.com?apikey=${import.meta.env.VITE_OMDB_API_KEY}
 
 export default route;

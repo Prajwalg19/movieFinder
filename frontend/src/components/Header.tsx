@@ -53,7 +53,7 @@ const Header = () => {
 
 
                 <Navbar.Collapse className="text-center font-medium">
-                    <Navbar.Link active={location.pathname == "/" ? true : false} as={Link} to="/">Home</Navbar.Link>
+                    <Navbar.Link active={location.pathname == "/home" ? true : false} as={Link} to="/home">Home</Navbar.Link>
                     <Navbar.Link active={location.pathname == "/blogs" ? true : false} as={Link} to="/blogs">My wishlists</Navbar.Link>
                     {
                         currentUser ? (

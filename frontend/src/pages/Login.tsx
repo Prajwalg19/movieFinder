@@ -11,6 +11,7 @@ import {useState} from "react";
 import {loginSuccess} from "@/redux/slices/userSlice";
 import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
+import OAuth from "@/components/OAuth";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -84,6 +85,7 @@ const Login = () => {
                                 <Button className="!bg-red-700 hover:!bg-red-800" type="submit" disabled={loading}>
                                     {!loading ? (<div className="font-semibold text-base ">Login</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}
                                 </Button>
+                                <OAuth />
                                 <span className="text-sm text-white">Don&apos;t Have An Account? <Link className="text-red-500" to="/register">Register here</Link></span>
 
                             </div>

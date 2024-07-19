@@ -3,11 +3,11 @@ export default function Drawer() {
     return (
         <div className="h-[430px] mx-2">
             <Carousel>
-                <img src="/movie1.jpg" alt="..." />
-                <img src="/movie2.jpg" alt="..." />
-                <img src="/movie3.jpeg" alt="..." />
-                <img src="/movie4.jpg" alt="..." />
-                <img src="/movie5.jpg" alt="..." />
+                <img className="object-cover" src="/movie4.jpg" alt="..." />
+                <img className="object-cover" src="/movie1.jpg" alt="..." />
+                <img className="object-cover" src="/movie2.jpg" alt="..." />
+                <img className="object-cover" src="/movie3.jpeg" alt="..." />
+                <img className="object-cover" src="/movie5.jpg" alt="..." />
             </Carousel>
         </div>
     );

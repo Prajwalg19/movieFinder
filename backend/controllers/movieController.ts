@@ -10,7 +10,7 @@ type paramTypes = {searchTerm: string | null, page: number, plot: "short" | "lon
 
 export const searchMovie: controllerType = async (req, res, next) => {
     try {
-        const {searchTerm, page, plot, year, type}: paramTypes = req.body;
+        const {searchTerm, page, plot, year, type} = req.query;
         if (searchTerm == "" || searchTerm == null || !searchTerm) {
             return next(customError("Enter a movie title", 400));
         }
@@ -35,6 +35,7 @@ export const getMovie: controllerType = async (req, res, next) => {
 
 export const addtowish: controllerType = async (req, res, next) => {
     try {
+        new wishLists()
 
     }
     catch (e) {

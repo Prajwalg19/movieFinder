@@ -1,4 +1,3 @@
-import {Button} from "flowbite-react";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {FcGoogle} from "react-icons/fc";
 import {app} from "../../firebase"
@@ -15,7 +14,7 @@ const OAuth = () => {
     const provider = new GoogleAuthProvider();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    provider.setCustomParameters({prompt: "select_account"}) // without this the user will not get a pop up if they have already signed in with the google OAuth earlier instead it would let them directly login with the past google account.
+    provider.setCustomParameters({prompt: "select_account"})
     const auth = getAuth(app);
 
     async function handleOAuth() {
@@ -40,13 +39,13 @@ const OAuth = () => {
     }
 
     return (
-        <Button disabled= {loading} type = "button" onClick = {handleOAuth} className = "w-full hover:text-white" gradientMonochrome = "pink" outline >
-            <span className="font-semibold flex flex-row gap-2 items-center justify-center" >
+        <button disabled={loading} type="button" onClick={handleOAuth} className="w-full bg-black hover:bg-gray-900 active:bg-gray-800">
+            <span className="font-semibold flex flex-row gap-2 items-center justify-center py-2 px-10 text-white border border-slate-600" >
                 <FcGoogle />
                 < span > Google </span >
-                </span>
-                </Button >
-           )
+            </span>
+        </button >
+    )
 }
 
 export default OAuth;

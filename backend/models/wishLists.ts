@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+interface MovieType {
+    Title: string;
+    Year: string | null;
+    imdbID: string | null;
+    Type: "movie" | "series" | "episode";
+    Poster: string | null;
+}
+
 const userWishListSchema = new mongoose.Schema(
     {
         user: {
@@ -7,9 +15,10 @@ const userWishListSchema = new mongoose.Schema(
             required: true,
             ref: "users"
         },
-        list: [{
-            id: {type: String, default: []}
-        }]
+        list: {
+            type: Array<MovieType>
+
+        }
     },
     {
         timestamps: true

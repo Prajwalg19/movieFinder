@@ -17,7 +17,7 @@ export const register: controllerType = async (req, res, next) => {
     try {
 
         if (!userName || !email || !password || userName == "" || email == "" || password == "") {
-            return next(customError("All fields are required", 400));// 400 bad Request
+            return next(customError("All fields are required", 400));
         }
         const hashedPass = bcryptjs.hashSync(password, 10);
         const query = new userModel({
@@ -54,7 +54,7 @@ export const login: controllerType = async (req, res, next) => {
                     const {password, ...rest} = query._doc
                     res.cookie("my_cookie", token, {
                         httpOnly: true, sameSite: "none", secure: true, partitioned: true,
-                        maxAge: 2 * 24 * 60 * 60 * 1000
+                        maxAge: 7 * 24 * 60 * 60 * 1000
                     }).status(200).json(rest)
 
                 } else {
@@ -85,3 +85,51 @@ export const deleteUser: controllerType = async (req, res, next) => {
 
 
 
+import {Document} from 'mongoose';
+
+export interface IUser {
+    userName: string;
+    password: string;
+    userPfp: string;
+    email: string;
+}
+
+export interface IUserDocument extends IUser, Document {}
+
+export const Oauth: controllerType = async (req, res, next) => {
+
+    try {
+        const {displayName, photoURL, email} = req.body;
+        if (!email || !displayName || !photoURL || email == "" || displayName == "" || photoURL == "") {
+            return next(customError("All fields are required", 400));
+        }
+        const query = await userModel.findOne({email})
+        if (!query) {
+            const password = Math.floor(Math.random() * 10000).toString();
+            const hashedPass = bcryptjs.hashSync(password, 10);
+
+            const userName = displayName.trim().split(" ").join("").toLowerCase() + "_" + Math.floor(Math.random() * 10000).toString()
+
+
+            const response = new userModel({
+                userName,
+                password: hashedPass,
+                userPfp: photoURL,
+                email
+            })
+            const userDoc: IUserDocument = await response.save();
+            const {password: pass, ...rest} = userDoc.toObject();
+            const token = jwt.sign({id: userDoc._id}, process.env.JWT_SEC_KEY!, {expiresIn: "2d"})
+            res.cookie("my_cookie", token, {httpOnly: true, sameSite: 'none', secure: true, partitioned: true}).status(201).json(rest);
+        }
+        else {
+            const {password, ...rest} = query.toObject();
+            const token = jwt.sign({id: query._id}, process.env.JWT_SEC_KEY!, {expiresIn: "2d"});
+            res.cookie("my_cookie", token, {httpOnly: true, sameSite: 'none', secure: true, partitioned: true}).status(200).json(rest);
+        }
+
+    } catch (e) {
+        next(e)
+
+    }
+}

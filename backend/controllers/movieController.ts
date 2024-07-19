@@ -14,7 +14,7 @@ export const searchMovie: controllerType = async (req, res, next) => {
         if (searchTerm == "" || searchTerm == null || !searchTerm) {
             return next(customError("Enter a movie title", 400));
         }
-        const response = await axios.get(`&s=${searchTerm}`);
+        const response = await axios.get(`&s=${searchTerm}&page=${page}&plot=${plot}&y=${year}&type=${type}`);
         res.json(response.data);
     } catch (e) {
         next(e);
@@ -26,6 +26,10 @@ export const searchMovie: controllerType = async (req, res, next) => {
 
 export const getMovie: controllerType = async (req, res, next) => {
     try {
+        const {imdbID} = req.params;
+        console.log(req.params)
+        const response = await axios.get(`&i=${imdbID}&plot=full`)
+        res.json(response.data);
     }
     catch (e) {
         next(e);

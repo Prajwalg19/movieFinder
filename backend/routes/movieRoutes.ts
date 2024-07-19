@@ -4,6 +4,7 @@ const route = express.Router();
 
 route.get("/search", searchMovie);
 route.post("/addtowish", addtowish)
+route.get("/:imdbID", getMovie)
 //http://www.omdbapi.com?apikey=${import.meta.env.VITE_OMDB_API_KEY}
 
 export default route;

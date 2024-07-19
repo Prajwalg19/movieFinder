@@ -26,12 +26,12 @@ export default function Intro() {
                         </span>
                     </Link>
 
-                    <Link to="#faq" type="button" className="border py-3 w-full shadow-md sm:w-[220px] box-border whitespace-nowrap px-7 group bg-red-700 rounded-sm text-white flex flex-row justify-center items-center hover:scale-105 transition gap-2 font-clashSemiBold tracking-wider">
+                    <a href="#faq" className="border py-3 w-full shadow-md sm:w-[220px] box-border whitespace-nowrap px-7 group bg-red-700 rounded-sm text-white flex flex-row justify-center items-center hover:scale-105 transition gap-2 font-clashSemiBold tracking-wider">
                         <span>Know More</span>
                         <span>
                             <FaLightbulb className="text-gray-300 text-2xl group-hover:translate-x-2 transition ease-in-out" />
                         </span>
-                    </Link>
+                    </a>
                 </div>
             </div>
 

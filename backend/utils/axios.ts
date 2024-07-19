@@ -4,7 +4,7 @@ dotenv.config();
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: `https://www.omdbapi.com/?apikey=${process.env.OMBD_API_KEY}&r=json`,
+    baseURL: `https://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}&r=json`,
 })
 
 export default axiosInstance;

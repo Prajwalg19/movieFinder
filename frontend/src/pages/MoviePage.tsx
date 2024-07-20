@@ -40,7 +40,7 @@ export default function MoviePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen h-full w-full flex justify-center items-center bg-black">
+            <div className="min-h-screen h-full w-full flex justify-center items-center bg-slate-100 dark:bg-black">
                 <Spinner size="xl" />
             </div>
         );
@@ -54,7 +54,7 @@ export default function MoviePage() {
                         <div className="md:flex-shrink-0">
                             <img
                                 className="h-full w-full object-cover md:h-full md:w-80"
-                                src={movieData.Poster}
+                                src={movieData.Poster != "N/A" ? movieData.Poster : "/ImagePlaceholder.png"}
                                 alt="Poster"
                             />
                         </div>

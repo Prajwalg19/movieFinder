@@ -1,10 +1,11 @@
 import express from "express";
-import {addtowish, getMovie, searchMovie} from "../controllers/movieController";
+import {updateWishList, getMovie, searchMovie, fetchUserWishLists} from "../controllers/movieController";
 const route = express.Router();
 
 route.get("/search", searchMovie);
-route.post("/addtowish", addtowish)
+route.post("/updatewishlist", updateWishList)
 route.get("/:imdbID", getMovie)
+route.get("/fetchwishlist/:userId", fetchUserWishLists)
 //http://www.omdbapi.com?apikey=${import.meta.env.VITE_OMDB_API_KEY}
 
 export default route;

@@ -1,7 +1,7 @@
 export type movieSearchType = {
     Title: string;
     Year: string | null;
-    imdbID: string | null;
+    imdbID: string;
     Type: "movie" | "series" | "episode";
     Poster: string | null;
 } | null

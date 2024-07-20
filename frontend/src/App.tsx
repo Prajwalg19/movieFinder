@@ -15,6 +15,7 @@ import Footer from "@/components/Footer"
 import PageNotFound from "./pages/PageNotFound"
 import {Toaster} from "react-hot-toast"
 import MoviePage from "./pages/MoviePage"
+import Search from "./pages/Search"
 
 function App() {
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/movie/:id" element={<MoviePage />} />
 
                 </Route>
+                <Route path="/search/" element={<Search />} />
                 <Route path="*" element={<PageNotFound />} />
 
             </Routes>

@@ -22,7 +22,6 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-"files": [],
         "paths": {
             "@/*": [
                 "src/*"
@@ -36,5 +35,8 @@
         {
             "path": "./tsconfig.node.json"
         }
-    ]
+    ],
+"files": [],
+"include": []
+
 }

@@ -16,7 +16,7 @@ const app = (0, express_1.default)();
 const mongo_con_string = process.env.MONGO_CON_STRING || "";
 const port = process.env.PORT || 4500;
 const corsOptions = {
-    origin: ["http://localhost:5173", ""],
+    origin: ["http://localhost:5173", "https://movie-finder-lyart.vercel.app"],
     credentials: true
 };
 app.use(express_1.default.json());

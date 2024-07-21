@@ -5,7 +5,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "../index.css"
-import {Pagination} from 'swiper/modules';
+// import {Pagination} from 'swipr/modules';
 import axios from '../utils/axios'
 import {motion} from 'framer-motion';
 import {movieSearchType} from "@/utils/types";
@@ -85,10 +85,6 @@ export default function Home() {
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={20}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[Pagination]}
                     loop={true}
                 >
                     {

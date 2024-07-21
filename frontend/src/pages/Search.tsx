@@ -208,7 +208,7 @@ export default function Search() {
                     </div>
 
                     {movieData.length > 0 && (
-                        <div className="flex items-center px-2 gap-3 flex-wrap text-white">
+                        <div className="flex justify-center items-center px-2 gap-3 flex-wrap text-white">
                             <button
                                 disabled={page === 1}
                                 onClick={() => handlePageChange(page - 1)}
@@ -216,7 +216,7 @@ export default function Search() {
                             >
                                 <a href="#top">Prev</a>
                             </button>
-                            <div className="flex flex-wrap md:text-lg text-sm items-center gap-2 text-white">
+                            <div className="flex flex-wrap md:text-lg text-sm justify-center items-center gap-2 text-white">
                                 {renderPageNumbers()}
                             </div>
                             <button

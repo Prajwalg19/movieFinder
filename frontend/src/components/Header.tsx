@@ -23,7 +23,7 @@ export default function Header() {
 
     return (
         user.currentUser && (location.pathname != "/" && location.pathname != "/login" && location.pathname != "/register") ? (
-            <motion.div initial={{opacity: 0, y: -10}} animate={{opacity: 1, y: 0}} className="w-full z-50 lg:py-4 py-2 px-3 md:px-10 dark:bg-gray-950 bg-slate-100">
+            <motion.div initial={{opacity: 0, y: -30}} animate={{opacity: 1, y: 0}} className="w-full z-50 lg:py-4 py-2 px-3 md:px-10 dark:bg-gray-950 bg-slate-100">
                 <section className="flex justify-between items-center">
                     <span className="z-10  font-clashSemiBold text-lg tracking-wider hidden lg:flex flex-row gap-10 items-center">
                         <Link to="/" className="dark:bg-slate-300  dark:rounded-3xl"><img src="/movie.png" className="h-10" alt="icon" /></Link>

@@ -43,7 +43,7 @@ export default function MoviePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-950 p-8 font-clashRegular">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-950 md:p-8 p-3 font-clashRegular">
             {movieData && (
                 <motion.div
                     initial={{opacity: 0, y: 20}}

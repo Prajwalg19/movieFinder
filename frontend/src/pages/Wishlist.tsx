@@ -6,6 +6,7 @@ import {RootState} from "@/redux/store";
 import MovieCard from "@/components/MovieCard";
 import {Spinner} from "flowbite-react";
 import {addcurrentWishlist} from "@/redux/slices/wishlistSlice";
+import {motion} from "framer-motion";
 function Wishlist() {
     const [loading, setLoading] = useState(true);
     const [cardData, setCardData] = useState<movieSearchType[]>([]);
@@ -45,13 +46,13 @@ function Wishlist() {
             ) :
 
                 (
-                    <div className="min-h-screen flex justify-center w-full flex-wrap gap-10 px-3 my-10">
+                    <motion.div initial={{x: -30, opacity: 0}} animate={{x: 0, opacity: 1}} transition={{delay: 0.3}} className="min-h-screen flex justify-center w-full flex-wrap gap-10 px-3 my-10">
                         {
                             cardData.map((item, index) => (
                                 <div key={index}><MovieCard prop={item} /></div>
                             ))
                         }
-                    </div >
+                    </motion.div >
 
                 )
     )

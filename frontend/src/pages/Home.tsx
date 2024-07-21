@@ -52,7 +52,9 @@ export default function Home() {
 
     return (
         <div className="min-h-screen">
-            <Carousel />
+            <motion.span initial={{opacity: 0, y: -40}} animate={{opacity: 1, y: 0}} transition={{delay: 0.3}}>
+                <Carousel />
+            </motion.span>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

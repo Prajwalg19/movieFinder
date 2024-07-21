@@ -27,7 +27,8 @@ export default function MovieCard({
                 return;
             }
             dispatch(changeWishState(movieData));
-            const response = await axios.post("/movie/updatewishlist", {
+            // const response =
+            await axios.post("/movie/updatewishlist", {
                 movieData: movieData,
                 userId: user._id
             });

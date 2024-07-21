@@ -36,7 +36,7 @@ app.listen(port, () => {
 app.use("/auth", authRoutes)
 app.use("/movie", movieRoutes)
 
-app.use((error: extendedError, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((error: extendedError, _: express.Request, res: express.Response, __: express.NextFunction) => {
     const statusCode = error.statusCode || 500;
     const message = error.message || "Internal Server Error";
     res.status(statusCode).json(message);

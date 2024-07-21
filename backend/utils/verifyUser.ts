@@ -1,28 +1,38 @@
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
-import customError from "./customError.js"
-import express from "express"
-dotenv.config()
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import customError from "./customError";
+import {Request, Response, NextFunction} from "express";
 
-export default async function verifyToken(req: express.Request, res: express.Response, next: express.NextFunction) {
+dotenv.config();
+
+interface CustomRequest extends Request {
+    userIdFromCookie?: string | jwt.JwtPayload;
+}
+
+export default async function verifyToken(
+    req: CustomRequest,
+    _: Response,
+    next: NextFunction
+) {
     try {
         if (!req.cookies?.my_cookie) {
-            return next(customError("No cookie!!", 401))
+            return next(customError("No cookie!!", 401));
         }
-        const token = req.cookies.my_cookie // this only works because i am using the cookie-parser library which populates the cookies with an object of all the cookies and thier values
+
+        const token = req.cookies.my_cookie;
         if (!token) {
-            return next(customError("Unauthorized", 401))
+            return next(customError("Unauthorized", 401));
         }
-        jwt.verify(token, process.env.JWT_SEC_KEY!, (err, decrypted) => {
+
+        jwt.verify(token, process.env.JWT_SEC_KEY!, (err: any, decrypted: any) => {
             if (err) {
-                return next(customError("Forbidden: Access token expired", 403))
+                return next(customError("Forbidden: Access token expired", 403));
             }
-            req.userIdFromCookie = decrypted
-        })
-        next()
+            req.userIdFromCookie = decrypted!;
+            next();
+        });
 
     } catch (e) {
-        next(e)
+        next(e);
     }
-
 }

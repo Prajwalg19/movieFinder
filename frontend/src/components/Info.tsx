@@ -6,7 +6,7 @@ export default function Info() {
                     <div className="flex-1 order-2 md:order-1 flex flex-col items-start justify-center mb-6 md:mb-0">
                         <p className="font-clashSemiBold text-3xl mb-4 text-red-700 mt-10 md:mt-0 self-center md:self-start">Purpose</p>
                         <p className="text-base font-clashRegular font-medium text-center md:text-start md:text-lg">
-                            Welcome to Movie Finder! Our goal is to provide you with detailed information about your favorite movies, series, and episodes. Whether you're looking to read plots, check release years, or explore cast and crew details, Movie Finder has got you covered. Use our search feature to dive into the world of entertainment and discover new favorites.
+                            Welcome to Movie Finder! The goal is to provide you with detailed information about your favorite movies, series, and episodes. Whether you're looking to read plots, check release years, or explore cast and crew details, Movie Finder has got you covered. Use the search feature to dive into the world of entertainment and discover new favorites.
                         </p>
                     </div>
                     <div className="flex-1 order-1 md:order-2 flex justify-center md:justify-end">
@@ -21,7 +21,7 @@ export default function Info() {
                     <div className="flex-1 flex flex-col items-start justify-center">
                         <p className="font-clashSemiBold text-3xl mb-4 mt-10 md:mt-0 self-center md:self-start text-red-700">Features</p>
                         <span className="text-base font-clashSemiBold text-center md:text-start md:text-lg">
-                            Our platform allows you to:
+                            The platform allows you to:
                             <ul className="list-disc list-inside ml-4 mt-2 text-base md:text-lg font-clashRegular font-medium">
                                 <li>Search for movies, series, and episodes by name or year of release.</li>
                                 <li>Read detailed plots and synopses.</li>
@@ -37,7 +37,7 @@ export default function Info() {
                     <div className="flex-1 order-2 md:order-1 flex flex-col items-start justify-center mb-6 md:mb-0">
                         <p className="font-clashSemiBold text-3xl mb-4 mt-10 md:mt-0 self-center md:self-start text-red-700">About Us</p>
                         <p className="text-base font-clashRegular font-medium text-center md:text-start md:text-lg">
-                            Movie Finder was created by a team of passionate movie enthusiasts who wanted to make it easier for people to find information about their favorite films and shows. We are constantly updating our database to bring you the latest and most accurate information available. Our mission is to enhance your viewing experience by providing a comprehensive and user-friendly platform.
+                            Movie Finder was created to make it easier for people to find information about their favorite films and shows. The database is constantly updated to bring you the latest and most accurate information available. The mission is to enhance your viewing experience by providing a comprehensive and user-friendly platform.
                         </p>
                     </div>
                     <div className="flex-1 order-1 md:order-2 flex items-center justify-center md:justify-end">

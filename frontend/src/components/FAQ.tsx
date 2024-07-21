@@ -33,7 +33,7 @@ export default function FAQ() {
                     <Accordion.Title>Is the information on Movie Finder up-to-date?</Accordion.Title>
                     <Accordion.Content>
                         <p className="mb-2 text-gray-500 dark:text-gray-400">
-                            We strive to keep our database updated with the latest information. Our data is sourced from the OMDB API, which is regularly updated to ensure accuracy.
+                            Database is updated with the latest information as data is sourced from the OMDB API, which is regularly updated to ensure accuracy.
                         </p>
                     </Accordion.Content>
                 </Accordion.Panel>

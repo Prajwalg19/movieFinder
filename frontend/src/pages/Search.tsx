@@ -121,6 +121,33 @@ export default function Search() {
         updateUrlParams({page: newPage});
     }
 
+    function renderPageNumbers() {
+        const totalPages = Math.ceil(totalResults / 10);
+        const maxPageNumbersToShow = 5;
+        let startPage = Math.max(1, page - Math.floor(maxPageNumbersToShow / 2));
+        let endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
+
+        if (endPage - startPage + 1 < maxPageNumbersToShow) {
+            startPage = Math.max(1, endPage - maxPageNumbersToShow + 1);
+        }
+
+        const pageNumbers = [];
+
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(
+                <button
+                    key={i}
+                    className={` border border-slate-300 px-4 py-2 mx-1 ${page === i ? 'bg-red-700 text-white' : 'bg-white text-black'} rounded-md`}
+                    onClick={() => handlePageChange(i)}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        return pageNumbers;
+    }
+
     return (
         <div className="min-h-screen text-black dark:text-slate-100 scroll-mt-10" id="top">
             <form
@@ -179,22 +206,23 @@ export default function Search() {
                             </div>
                         ))}
                     </div>
+
                     {movieData.length > 0 && (
-                        <div className="flex items-center gap-5 text-white">
+                        <div className="flex items-center px-2 gap-3 flex-wrap text-white">
                             <button
                                 disabled={page === 1}
                                 onClick={() => handlePageChange(page - 1)}
-                                className="text-lg font-clashSemiBold bg-black border border-slate-700 px-3 py-2 disabled:bg-gray-600"
+                                className="md:text-lg text-sm font-clashSemiBold rounded-md bg-black border border-slate-700 px-3 py-2 disabled:bg-gray-500"
                             >
                                 <a href="#top">Prev</a>
                             </button>
-                            <span className="text-lg font-clashSemiBold text-black dark:text-slate-100">
-                                Page {page} of {Math.ceil(totalResults / 10)}
-                            </span>
+                            <div className="flex flex-wrap md:text-lg text-sm items-center gap-2 text-white">
+                                {renderPageNumbers()}
+                            </div>
                             <button
                                 disabled={page * 10 >= totalResults}
                                 onClick={() => handlePageChange(page + 1)}
-                                className="text-lg disabled:bg-gray-600 border font-clashSemiBold bg-black border-slate-700 px-3 py-2"
+                                className="md:text-lg text-sm disabled:bg-gray-600 border rounded-md font-clashSemiBold bg-black border-slate-500 px-3 py-2"
                             >
                                 <a href="#top">Next </a>
                             </button>

@@ -7,6 +7,7 @@ import {Spinner} from "flowbite-react";
 import {FaImdb} from 'react-icons/fa';
 import {SiRottentomatoes} from "react-icons/si";
 import {MdOutlineMovie} from 'react-icons/md';
+import {motion} from 'framer-motion';
 
 export default function MoviePage() {
     const [loading, setLoading] = useState(true);
@@ -40,44 +41,46 @@ export default function MoviePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen h-full w-full flex justify-center items-center bg-slate-100 dark:bg-black">
+            <div className="min-h-screen h-full w-full flex justify-center items-center bg-gray-100 text-black dark:text-slate-100 dark:bg-gray-950">
                 <Spinner size="xl" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-black h-full p-8 font-clashRegular w-full">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-950 h-full p-8 font-clashRegular w-full">
             {movieData && (
-                <div className="w-full mx-auto h-full overflow-hidden">
-                    <div className="p-4 md:flex md:items-start">
+                <motion.div
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{duration: 0.5}}
+                    className=" mx-auto bg-white border dark:border-slate-600 dark:bg-gray-900 rounded-lg shadow-md overflow-hidden"
+                >
+                    <div className="md:flex">
                         <div className="md:flex-shrink-0">
-                            <img
-                                className="h-full w-full object-cover md:h-full md:w-80"
-                                src={movieData.Poster != "N/A" ? movieData.Poster : "/ImagePlaceholder.png"}
+                            <motion.img
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                transition={{duration: 1}}
+                                className="h-96 w-full object-cover md:h-full md:w-80"
+                                src={movieData.Poster !== "N/A" ? movieData.Poster : "/ImagePlaceholder.png"}
                                 alt="Poster"
                             />
                         </div>
-                        <div className="mt-4 md:mt-0 md:ml-6">
+                        <div className="p-8">
                             <h1 className="text-4xl text-red-700 font-clashSemiBold dark:text-gray-100">{movieData.Title}</h1>
-                            <div className="mt-2">
+                            <div className="mt-4 space-y-2">
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Year:</strong> {movieData.Year}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Rated:</strong> {movieData.Rated}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Released:</strong> {movieData.Released}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Runtime:</strong> {movieData.Runtime}</p>
-                            </div>
-                            <div className="mt-4">
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Director:</strong> {movieData.Director}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Writer:</strong> {movieData.Writer}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Actors:</strong> {movieData.Actors}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Plot:</strong> {movieData.Plot}</p>
-                            </div>
-                            <div className="mt-4">
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Language:</strong> {movieData.Language}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Country:</strong> {movieData.Country}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Awards:</strong> {movieData.Awards}</p>
-                            </div>
-                            <div className="mt-4">
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">Metascore:</strong> {movieData.Metascore}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">IMDb Rating:</strong> {movieData.imdbRating}</p>
                                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300"><strong className="font-clashSemiBold">IMDb Votes:</strong> {movieData.imdbVotes}</p>
@@ -100,7 +103,7 @@ export default function MoviePage() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
         </div>
     );

@@ -10,12 +10,16 @@ import axios from "../utils/axios"
 import toast from "react-hot-toast";
 import {logOut} from "@/redux/slices/userSlice";
 import {AxiosError} from "axios";
+import {useEffect} from "react";
 export default function MovieCard({
     prop
 }: {prop: movieSearchType}) {
     const dispatch = useDispatch();
     const wishLists = useSelector((store: RootState) => store.wishlist.allWishListMovieData);
     const user = useSelector((store: RootState) => store.user.currentUser);
+    useEffect(() => {
+
+    }, [wishLists])
     async function handleWishList(movieData: movieSearchType) {
         try {
             if (!user) {

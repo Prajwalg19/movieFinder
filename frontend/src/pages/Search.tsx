@@ -1,151 +1,160 @@
 import MovieCard from "@/components/MovieCard";
 import {FaSearch} from "react-icons/fa";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useCallback} from "react";
 import axios from "../utils/axios";
 import toast from "react-hot-toast";
 import {AxiosError} from "axios";
 import {movieSearchType} from "@/utils/types";
 import {Spinner} from "flowbite-react";
 import {useLocation, useNavigate} from "react-router-dom";
+import debounce from 'lodash.debounce';
 
 export default function Search() {
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const [movieData, setMovieData] = useState<[] | movieSearchType[]>([]);
+    const [movieData, setMovieData] = useState<movieSearchType[]>([]);
     const [totalResults, setTotalResults] = useState(0);
     const [message, setMessage] = useState<string | null>(null);
     const location = useLocation();
-    const queryString = location.search; // maan i get confused with useLocation , useParams. location for full path and useParams for parameters in router dom.
-    const allQueryParams = new URLSearchParams(queryString)
+    const navigate = useNavigate();
+
+    const queryString = location.search;
+    const allQueryParams = new URLSearchParams(queryString);
+
     const [searchParam, setSearchParam] = useState({
         searchTerm: allQueryParams.get("searchTerm") ?? "",
-        page: 1,
-        plot: null,
-        year: null,
-        type: null
+        page: parseInt(allQueryParams.get("page") ?? "1", 10),
+        plot: allQueryParams.get('plot') ?? null,
+        year: allQueryParams.get('year') ?? null,
+        type: allQueryParams.get('type') ?? null
     });
+
     const {searchTerm, page, plot, year, type} = searchParam;
 
     useEffect(() => {
+        if (searchTerm === "") return;
         getMovieData();
+    }, [searchParam.page, searchParam.type, searchParam.year, searchParam.plot, allQueryParams.get("searchTerm")]);
+
+    useEffect(() => {
+        const params = {
+            searchTerm: allQueryParams.get("searchTerm") ?? "",
+            page: parseInt(allQueryParams.get("page") ?? "1", 10),
+            plot: allQueryParams.get('plot') ?? null,
+            year: allQueryParams.get('year') ?? null,
+            type: allQueryParams.get('type') ?? null
+        };
+        setSearchParam(params);
     }, [queryString]);
+
+    const debouncedSearch = useCallback(
+        debounce((newSearchTerm) => {
+            setSearchParam((prev) => ({...prev, searchTerm: newSearchTerm, page: 1}));
+            updateUrlParams({searchTerm: newSearchTerm, page: 1});
+        }, 1500), []
+    );
 
     async function getMovieData() {
         try {
             setLoading(true);
-            const searchTerm = allQueryParams.get("searchTerm") ?? "";
-            const page = allQueryParams.get("page") ?? 1;
-            const year = allQueryParams.get('year') ?? null;
-            const type = allQueryParams.get('type') ?? null;
-            const plot = allQueryParams.get('plot') ?? null;
-            if (searchTerm == "" || !searchTerm) {
-                setLoading(false);
-                return
-            };
-            let queryString1 = `searchTerm=${searchTerm.trim()}&page=${page}&type=${type}&year=${year}&plot=${plot}`;
-            const response: {data: {Search: movieSearchType[], totalResults: String, Response: String, Error?: String}} | null = await axios.get(`/movie/search?${queryString1}`);
+            const searchParams = new URLSearchParams({
+                searchTerm: searchTerm.trim(),
+                page: page.toString(),
+                type: type ?? "",
+                year: year ?? "",
+                plot: plot ?? ""
+            }).toString();
+
+            const response = await axios.get(`/movie/search?${searchParams}`);
             if (response && response.data) {
-                if (response.data.Response == "True") {
-                    setMovieData(response.data.Search)
+                if (response.data.Response === "True") {
+                    setMovieData(response.data.Search);
                     setTotalResults(Number(response.data.totalResults));
                     setMessage(null);
-                }
-                else {
-                    if (response.data.Error == "Too many results.") {
-                        setMessage("Be bit more specific");
-                    } else {
-                        setMessage(`${response.data.Error}`)
-                    }
+                } else {
+                    setMessage(response.data.Error || "Something went wrong");
                     setMovieData([]);
                 }
             } else {
-                toast.error("Something went wrong, Lets give it another try")
+                toast.error("Something went wrong, Let's give it another try");
                 setMovieData([]);
                 setMessage(null);
             }
-            setLoading(false);
-
         } catch (e: unknown) {
             if (e instanceof AxiosError && e.response) {
-                if (e.response.status == 400) {
+                if (e.response.status === 400) {
                     toast.error("Bad request");
-                }
-                else if (e.response.status == 404) {
+                } else if (e.response.status === 404) {
                     toast.error("Request Not Found");
-                } else if (e.response.status == 403) {
+                } else if (e.response.status === 403) {
                     toast.error("User not logged in");
                 }
             } else {
                 toast.error("Something went wrong");
             }
             setMovieData([]);
-            setLoading(false);
             setMessage(null);
+        } finally {
+            setLoading(false);
         }
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-        setSearchParam((prev) => (
-            {
-                ...prev,
-                [e.target.id]: e.target.value
-            }
-        ))
+        setSearchParam((prev) => ({
+            ...prev,
+            [e.target.id]: e.target.value
+        }));
     }
-    function searchMovies() {
-        const queryString = `searchTerm=${searchTerm.trim()}&page=${page}&type=${type}&year=${year}&plot=${plot}`;
+
+    function handleSearchTermChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const newSearchTerm = e.target.value;
+        setSearchParam((prev) => ({...prev, searchTerm: newSearchTerm}));
+        debouncedSearch(newSearchTerm);
+    }
+
+    function updateUrlParams(newParams: any) {
+        const queryString = new URLSearchParams({...searchParam, ...newParams}).toString();
         navigate(`/search?${queryString}`);
     }
 
-
-    // async function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
-    //     e.preventDefault();
-    //     try {
-    //         setLoading(true);
-    //         const response: {data: {Search: movieSearchType[], totalResults: String, Response: String, Error?: String}} | null = await axios.get(`/movie/search?searchTerm=${searchTerm.trim()}&page=${page}&plot=${plot}&year=${year}&type=${type}`);
-    //         if (response && response.data) {
-    //             if (response.data.Response == "True") {
-    //                 setMovieData(response.data.Search)
-    //                 setTotalResults(Number(response.data.totalResults));
-    //             }
-    //             else {
-    //                 if (response.data.Error == "Too many results.") {
-    //                     toast.error("Be bit more specific");
-    //                 } else {
-    //                     toast.error(`${response.data.Error}`)
-    //                 }
-    //                 setMovieData([]);
-    //             }
-    //         } else {
-    //             toast.error("Lets give it another try")
-    //             setMovieData([]);
-    //         }
-    //         setLoading(false);
-    //     } catch (e: unknown) {
-    //         if (e instanceof AxiosError && e.response) {
-    //             if (e.response.status == 400) {
-    //                 toast.error("Bad request");
-    //             }
-    //             else if (e.response.status == 404) {
-    //                 toast.error("Request Not Found");
-    //             } else if (e.response.status == 403) {
-    //                 toast.error("User not logged in");
-    //             }
-    //         } else {
-    //             toast.error("Something went wrong");
-    //         }
-    //         setMovieData([]);
-    //         setLoading(false);
-    //     }
-    // }
+    function handlePageChange(newPage: number) {
+        setSearchParam((prev) => ({...prev, page: newPage}));
+        updateUrlParams({page: newPage});
+    }
 
     return (
-
-        <div className="min-h-screen">
-            <form onSubmit={(e) => {e.preventDefault(); searchMovies();}} className="w-full justify-center flex flex-col sm:flex-row gap-4 dark:text-white text-black font-clashSemiBold my-10 px-3">
-                <input value={searchTerm} type="text" id="searchTerm" onChange={handleChange} className="rounded-md text-lg sm:text-xl py-2 px-3 w-full sm:w-[600px] dark:bg-black/90 dark:text-slate-300" placeholder="Search Movies" />
-                <button className="border-black bg-red-700 rounded-md hover:bg-red-800 active:bg-red-900 py-2 px-5 sm:px-10 text-white border">Search</button>
-                <select defaultValue="" onChange={(e) => handleChange(e)} className="text-black dark:text-white dark:bg-black border-slate-500 border rounded-md py-2 px-3 w-full sm:w-auto" id="type">
+        <div className="min-h-screen text-black dark:text-slate-100 scroll-mt-10" id="top">
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    setSearchParam((prev) => ({...prev, page: 1}));
+                    updateUrlParams({page: 1});
+                    getMovieData();
+                }}
+                className="w-full justify-center flex flex-col sm:flex-row gap-4 dark:text-white text-black font-clashSemiBold my-10 px-3"
+            >
+                <div className="relative w-full sm:w-[600px]">
+                    <input
+                        value={searchTerm}
+                        type="text"
+                        id="searchTerm"
+                        onChange={handleSearchTermChange}
+                        className="rounded-md text-lg sm:text-xl py-2 px-3 w-full dark:bg-black/90 dark:text-slate-300 pl-10"
+                        placeholder="Search Movies"
+                    />
+                    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                </div>
+                <button
+                    type="submit"
+                    className="border-black bg-red-700 rounded-md hover:bg-red-800 active:bg-red-900 py-2 px-5 sm:px-10 text-white border"
+                >
+                    Search
+                </button>
+                <select
+                    value={type ?? ""}
+                    onChange={(e) => {handleChange(e); updateUrlParams({type: e.target.value});}}
+                    className="text-black dark:text-white dark:bg-black border-slate-500 border rounded-md py-2 px-3 w-full sm:w-auto"
+                    id="type"
+                >
                     <option disabled hidden value="">Type</option>
                     <option value="movie">Movie</option>
                     <option value="series">Series</option>
@@ -153,24 +162,46 @@ export default function Search() {
                 </select>
             </form>
 
-            {
-                loading ? (
-                    <div className="min-h-screen h-full w-full flex justify-center items-center">
-                        <Spinner size="xl" />
+            {loading ? (
+                <div className="min-h-screen h-full w-full flex justify-center items-center">
+                    <Spinner size="xl" />
+                </div>
+            ) : message ? (
+                <div className="flex w-full h-full font-clashSemiBold text-2xl justify-center mt-20">
+                    <span>{message}</span>
+                </div>
+            ) : (
+                <div className="flex flex-col items-center gap-10">
+                    <div className="flex justify-center w-full flex-wrap gap-10 px-3">
+                        {movieData.map((item, index) => (
+                            <div key={index}>
+                                <MovieCard prop={item} />
+                            </div>
+                        ))}
                     </div>
-                ) :
-                    message ? (<div className="flex w-full h-full font-clashSemiBold text-2xl justify-center mt-20"><span>{message}</span></div>) :
-
-                        <div className="flex justify-center w-full flex-wrap gap-10 px-3">
-                            {
-                                movieData.map((item, index) => (
-                                    <div key={index}>
-                                        <MovieCard prop={item} />
-                                    </div>
-                                ))
-                            }
+                    {movieData.length > 0 && (
+                        <div className="flex items-center gap-5 text-white">
+                            <button
+                                disabled={page === 1}
+                                onClick={() => handlePageChange(page - 1)}
+                                className="text-lg font-clashSemiBold bg-black border border-slate-700 px-3 py-2 disabled:bg-gray-600"
+                            >
+                                <a href="#top">Prev</a>
+                            </button>
+                            <span className="text-lg font-clashSemiBold text-black dark:text-slate-100">
+                                Page {page} of {Math.ceil(totalResults / 10)}
+                            </span>
+                            <button
+                                disabled={page * 10 >= totalResults}
+                                onClick={() => handlePageChange(page + 1)}
+                                className="text-lg disabled:bg-gray-600 border font-clashSemiBold bg-black border-slate-700 px-3 py-2"
+                            >
+                                <a href="#top">Next </a>
+                            </button>
                         </div>
-            }
+                    )}
+                </div>
+            )}
         </div>
-    )
+    );
 }

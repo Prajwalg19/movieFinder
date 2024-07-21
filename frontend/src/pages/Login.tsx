@@ -42,7 +42,7 @@ const Login = () => {
                 } else if (e.response?.status == 403) {
                     toast.error(e.response.data.message)
                 } else {
-                    toast.error("Something went wrong")
+                    toast.error(e.response!.data)
                 }
             } else {
                 toast.error("Something went wrong")
@@ -55,17 +55,17 @@ const Login = () => {
     }
     return (
         <main className="min-h-screen h-full w-full flex justify-center items-center">
-            <img src="/bg_poster.jpg" className="object-cover w-full h-full -z-10 left-0 top-0 fixed" alt="backgournd poster" />
-            <div className="max-w-xl gap-14 md:mx-auto font-clashSemiBold flex flex-col justify-center w-full bg-black/50 mx-3 rounded-xl p-10 border border-white/30">
-                <span className="flex-1 whitespace-nowrap px-2 py-1 gap-4 flex flex-col items-center justify-center md:items-start">
+            <img src="/bg_poster.jpg" className="object-cover w-full h-full z-0 left-0 top-0 fixed" alt="backgournd poster" />
+            <div className="max-w-xl gap-14 md:mx-auto font-clashSemiBold flex flex-col z-10 justify-center w-full dark:bg-black/50 bg-black/50 mx-3 rounded-xl p-10 border border-white/30">
+                <span className="flex-1 whitespace-nowrap px-2 py-1 gap-4 flex flex-col  items-center justify-center md:items-start">
                     <span className="text-2xl gap-2 flex flex-row items-center justify-center w-full">
-                        <span className="flex flex-row items-center gap-3">
+                        <Link to="/" className="flex flex-row items-center gap-3">
                             <img src="/movie.png" alt="Icon" className="w-auto h-16" />
                             <span className="flex flex-col items-start justify-center text-white">
                                 <span className="text-nowrap"><span className="text-red-600">Movie</span> Finder</span>
                                 <span className="text-sm tracking-wider font-semibold font-clashRegular">Bing read movies</span>
                             </span>
-                        </span>
+                        </Link>
                     </span>
                 </span>
                 <Formik initialValues={formData} onSubmit={handleSubmit} validationSchema={loginSchema}>

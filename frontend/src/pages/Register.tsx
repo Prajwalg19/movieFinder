@@ -48,8 +48,8 @@ const Register = () => {
     }
     return (
         <main className="min-h-screen h-full w-full flex justify-center items-center font-clashSemiBold">
-            <img src="/bg_poster.jpg" className="object-cover w-full h-full -z-10 left-0 top-0 fixed " alt="backgournd poster" />
-            <div className="max-w-xl gap-14 md:mx-auto flex flex-col justify-center w-full bg-black/50 mx-3 rounded-xl p-10 border border-white/30">
+            <img src="/bg_poster.jpg" className="object-cover w-full h-full z-0 left-0 top-0 fixed " alt="backgournd poster" />
+            <div className="max-w-xl gap-14 md:mx-auto flex flex-col z-10 justify-center w-full bg-black/50 mx-3 rounded-xl p-10 border border-white/30">
                 <span className="flex-1 whitespace-nowrap px-2 py-1 gap-4 flex flex-col items-center justify-center md:items-start">
                     <span className="text-2xl gap-2 flex flex-row items-center justify-center w-full">
                         <span className="flex flex-row items-center gap-3">

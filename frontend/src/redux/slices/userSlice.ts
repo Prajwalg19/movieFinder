@@ -23,7 +23,7 @@ const userSlice = createSlice({
         logOut: (state) => {
             state.currentUser = null
         },
-    }
+    },
 })
 
 

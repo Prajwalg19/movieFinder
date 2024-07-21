@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
-    @apply bg-slate-100 dark:bg-black
+    @apply bg-slate-100 dark:bg-gray-950
 }
 
 body {
@@ -43,5 +43,6 @@ html {
 --scroll-behavior: smooth!important;
 scroll-behavior: smooth!important;
 }
+
 
 

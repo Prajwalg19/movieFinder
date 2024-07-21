@@ -137,7 +137,7 @@ export default function Search() {
             pageNumbers.push(
                 <button
                     key={i}
-                    className={` border border-slate-300 px-4 py-2 mx-1 ${page === i ? 'bg-red-700 text-white' : 'bg-white text-black'} rounded-md`}
+                    className={` border border-slate-300 px-4 py-2 mx-1 dark:bg-gray-800 dark:text-white ${page === i ? 'dark:bg-red-700 bg-red-700 text-white' : 'bg-white text-black'} rounded-md`}
                     onClick={() => handlePageChange(i)}
                 >
                     {i}

@@ -75,7 +75,7 @@ export default function Home() {
             </form>
 
             <div >
-                <p className="text-3xl font-clashSemiBold pt-6 pb-10 pl-3">Recommendations</p>
+                <p className="md:text-3xl text-2xl font-clashSemiBold pt-6 pb-10 pl-3">Recommendations</p>
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={20}
@@ -88,13 +88,13 @@ export default function Home() {
                     {
                         loading ? (
                             Array(7).fill("a").map((_, index) => (
-                                <SwiperSlide key={index} className="cursor-pointer px-3 !w-[350px] !h-[500px] flex justify-center items-center !rounded-lg">
+                                <SwiperSlide key={index} className="cursor-pointer px-3 !w-[280px] md:!w-[350px] !h-[400px] md:!h-[500px] flex justify-center items-center !rounded-lg">
                                     <SwiperSlideSkeleton />
                                 </SwiperSlide>
                             ))
                         ) :
                             data.map((item, index) => (
-                                <SwiperSlide key={index} className="cursor-pointer px-3 !w-[350px] !h-[500px]  flex justify-center items-center !rounded-lg "
+                                <SwiperSlide key={index} className="cursor-pointer px-3 !w-[280px] md:!w-[350px] !h-[400px] md:!h-[500px]  flex justify-center items-center !rounded-lg "
                                     onClick={() => {navigate(`/movie/${item?.imdbID}`)}}
                                 >
                                     <motion.div

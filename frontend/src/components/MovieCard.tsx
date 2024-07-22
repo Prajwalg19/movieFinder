@@ -32,7 +32,6 @@ export default function MovieCard({
                 movieData: movieData,
                 userId: user._id
             });
-            toast.success("Wishlist added");
         } catch (e: unknown) {
             if (e instanceof AxiosError && e.response != undefined) {
                 if (e.response.status == 401 || e.response.status == 403) {

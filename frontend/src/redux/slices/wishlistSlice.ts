@@ -1,5 +1,6 @@
 import {movieSearchType} from "@/utils/types";
 import {createSlice} from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 type typeOfInitState = {
     allWishListMovieData: Array<String>;
@@ -23,6 +24,7 @@ const wishListSlice = createSlice({
                 let arr;
                 arr = (state.allWishListMovieData.filter((item) => {
                     if (item != movieData?.imdbID) return item;
+                    toast.success("Wishlist removed");
                 }
                 ))
                 state.allWishListMovieData = arr
@@ -30,6 +32,7 @@ const wishListSlice = createSlice({
                 let imdbArr = state.allWishListMovieData;
                 imdbArr.push(movieData?.imdbID!)
                 state.allWishListMovieData = imdbArr;
+                toast.success("Wishlist added");
             }
         },
         logOutClear(state) {

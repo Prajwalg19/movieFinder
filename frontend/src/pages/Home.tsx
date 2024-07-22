@@ -11,6 +11,7 @@ import {motion} from 'framer-motion';
 import {movieSearchType} from "@/utils/types";
 import {SwiperSlideSkeleton} from "@/components/Skeleton";
 import {FaSearch} from "react-icons/fa";
+import toast from "react-hot-toast";
 
 
 export default function Home() {
@@ -38,6 +39,8 @@ export default function Home() {
                     setLoading(false);
                 }
                 catch (e) {
+                    toast.error("Something went wrong")
+                } finally {
                     setLoading(false);
                 }
             }

@@ -27,6 +27,7 @@ const OAuth = () => {
             const response = await axios.post("/auth/oauth", {displayName, email, photoURL})
             dispatch(loginSuccess(response.data));
             setLoading(false);
+            toast.success("Login success");
             navigate("/home");
         } catch (e: unknown) {
             if (e instanceof AxiosError && e.response) {
@@ -34,8 +35,12 @@ const OAuth = () => {
             } else {
                 toast.error("Something went wrong");
             }
-            setLoading(false);
         }
+        finally {
+            setLoading(false);
+
+        }
+
 
     }
 

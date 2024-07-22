@@ -38,6 +38,7 @@ export default function Home() {
                     }
                 }
                 catch (e) {
+                    toast.error("Something went wrong")
                 } finally {
                     setLoading(false);
                 }

@@ -26,9 +26,10 @@ export default function MoviePage() {
                 }
                 setLoading(false);
             } catch (e) {
-                setLoading(false);
                 setMovieData(null);
                 toast.error("Something went wrong");
+            }finally{
+                setLoading(false);
             }
         };
         fetchMovieInfo();

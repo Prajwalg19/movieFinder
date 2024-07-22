@@ -47,7 +47,7 @@ const Login = () => {
             } else {
                 toast.error("Something went wrong")
             }
-
+        } finally {
             setLoading(false);
         }
 

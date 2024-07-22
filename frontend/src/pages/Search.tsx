@@ -5,9 +5,9 @@ import axios from "../utils/axios";
 import toast from "react-hot-toast";
 import {AxiosError} from "axios";
 import {movieSearchType} from "@/utils/types";
-import {Spinner} from "flowbite-react";
 import {useLocation, useNavigate} from "react-router-dom";
 import debounce from 'lodash.debounce';
+import {SearchPageSkeleton} from "@/components/Skeleton";
 
 export default function Search() {
     const [loading, setLoading] = useState(false);
@@ -116,9 +116,11 @@ export default function Search() {
         navigate(`/search?${queryString}`);
     }
 
+
     function handlePageChange(newPage: number) {
         setSearchParam((prev) => ({...prev, page: newPage}));
         updateUrlParams({page: newPage});
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function renderPageNumbers() {
@@ -190,9 +192,7 @@ export default function Search() {
             </form>
 
             {loading ? (
-                <div className="min-h-screen h-full w-full flex justify-center items-center">
-                    <Spinner size="xl" />
-                </div>
+                <SearchPageSkeleton />
             ) : message ? (
                 <div className="flex w-full h-full font-clashSemiBold text-2xl justify-center mt-20">
                     <span>{message}</span>

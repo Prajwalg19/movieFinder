@@ -10,16 +10,12 @@ import axios from "../utils/axios"
 import toast from "react-hot-toast";
 import {logOut} from "@/redux/slices/userSlice";
 import {AxiosError} from "axios";
-import {useEffect} from "react";
 export default function MovieCard({
     prop
 }: {prop: movieSearchType}) {
     const dispatch = useDispatch();
     const wishLists = useSelector((store: RootState) => store.wishlist.allWishListMovieData);
     const user = useSelector((store: RootState) => store.user.currentUser);
-    useEffect(() => {
-
-    }, [wishLists])
     async function handleWishList(movieData: movieSearchType) {
         try {
             if (!user) {
@@ -44,7 +40,7 @@ export default function MovieCard({
     }
     return (
         <div className="group relative w-[350px] dark:bg-gray-900 bg-slate-200 font-clashRegular border border-red-800 hover:border-2 h-[520px] overflow-hidden rounded-tr-3xl rounded-bl-3xl transition-all">
-            <button className={`absolute top-0 left-0 px-1 py-5 transition-all ${wishLists.length != 0 && wishLists.includes(prop.imdbID) ? "bg-green-500" : "bg-red-600"} rounded-br-md flex justify-center items-center`} onClick={() => handleWishList(prop)}>
+            <button className={`absolute top-0 left-0 px-1 py-5 transition-all ${wishLists.length != 0 && wishLists.includes(prop!.imdbID) ? "bg-green-500" : "bg-red-600"} rounded-br-md flex justify-center items-center`} onClick={() => handleWishList(prop)}>
                 {wishLists.length != 0 && wishLists.includes(prop?.imdbID!) ? <BsBookmarkCheckFill className="text-3xl text-white" /> : <BsBookmarkPlusFill className="text-3xl text-white" />}
             </button>
             <Link to={`/movie/${prop?.imdbID}`}>

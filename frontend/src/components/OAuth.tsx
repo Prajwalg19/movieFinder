@@ -9,6 +9,7 @@ import {useDispatch} from "react-redux";
 import axios from "@/utils/axios"
 import {AxiosError} from "axios";
 import {useState} from "react";
+import {Spinner} from "flowbite-react";
 const OAuth = () => {
     const [loading, setLoading] = useState(false);
     const provider = new GoogleAuthProvider();
@@ -41,8 +42,7 @@ const OAuth = () => {
     return (
         <button disabled={loading} type="button" onClick={handleOAuth} className="w-full bg-black hover:bg-gray-900 active:bg-gray-800">
             <span className="font-semibold flex flex-row gap-2 items-center justify-center py-2 px-10 text-white border border-slate-600" >
-                <FcGoogle />
-                < span > Google </span >
+                {loading ? (<div className="flex items-center gap-3"><Spinner size="sm" /><span>Loading</span></div>) : (<><FcGoogle /> < span > Google </span ></>)}
             </span>
         </button >
     )

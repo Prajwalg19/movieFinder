@@ -11,6 +11,7 @@ import {motion} from 'framer-motion';
 import {movieSearchType} from "@/utils/types";
 import {SwiperSlideSkeleton} from "@/components/Skeleton";
 import {FaSearch} from "react-icons/fa";
+import toast from "react-hot-toast";
 
 
 export default function Home() {
@@ -29,15 +30,15 @@ export default function Home() {
                         if (response.data.Response == "True") {
                             setData(response.data.Search)
                         } else {
-
+                            toast.error("Oops! Network Problem");
                         }
                     }
                     else {
-
+                        toast.error("Something went wrong");
                     }
-                    setLoading(false);
                 }
                 catch (e) {
+                } finally {
                     setLoading(false);
                 }
             }
@@ -52,9 +53,9 @@ export default function Home() {
 
     return (
         <div className="min-h-screen">
-            <motion.span initial={{opacity: 0, y: -40}} animate={{opacity: 1, y: 0}} transition={{delay: 0.3}}>
+            <span >
                 <Carousel />
-            </motion.span>
+            </span>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

@@ -61,8 +61,8 @@ export default function MovieCard({
                     Details
                 </Link>
                 <div className="p-3 flex flex-col gap-2">
-                    <Link to={`/movie/${prop?.imdbID}`} className="text-lg font-clashSemiBold truncate line-clamp-2">{prop?.Title}</Link>
-                    <div>{prop?.Year}</div>
+{/*                     <Link to={`/movie/${prop?.imdbID}`} className="text-lg font-clashSemiBold truncate line-clamp-2">{prop?.Title}</Link>
+                    <div>{prop?.Year}</div> */}
                     <Link
                         to={`/movie/${prop?.imdbID}`}
                         className="font-clashBold z-10 group-hover:bottom-0 absolute bottom-[-200px] left-0 right-0 border border-red-800 text-red-800 hover:bg-red-800 hover:text-white transition-all duration-300 text-center py-2 rounded-md !rounded-tl-none m-2"

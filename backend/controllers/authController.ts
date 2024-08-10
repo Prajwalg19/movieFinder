@@ -4,13 +4,13 @@ import customError from "../utils/customError";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 import express from "express"
-import {FilterQuery} from "mongoose";
+import mongoose, {FilterQuery} from "mongoose";
 dotenv.config();
 
 type controllerType = (req: express.Request, res: express.Response, next: express.NextFunction) => void
 
 export const register: controllerType = async (req, res, next) => {
-    const {userName, password, email} = req.body;
+    const {userName, password, email}: {userName: string, password: string, email: string} = req.body;
     function isMongoServerError(e: any) {
         return e && e.code == 11000;
     }
@@ -23,13 +23,13 @@ export const register: controllerType = async (req, res, next) => {
         const query = new userModel({
             userName,
             password: hashedPass,
-            email
+            email: email.toLowerCase()
         })
         await query.save();
-        res.status(201).json("user created successfully");
+        res.status(201).json({message: "User created successfully"});
     } catch (e) {
         if (isMongoServerError(e)) {
-            next(customError("Email or Username already exists", 409))
+            next(customError("Account already exists", 409))
         }
         else {
             next(e)
@@ -39,13 +39,13 @@ export const register: controllerType = async (req, res, next) => {
 
 
 export const login: controllerType = async (req, res, next) => {
-    const {email, password} = req.body;
+    const {email, password}: {email: string, password: string} = req.body;
 
     try {
         if (!email || !password || email == "" || password == "") {
             return next(customError("All fields are required", 400));
         }
-        const query: FilterQuery<typeof userModel> | null = await userModel.findOne({email: email})
+        const query: FilterQuery<typeof userModel> | null = await userModel.findOne({email: email.toLowerCase()})
         if (query) {
             if (query.password) {
                 const isPassword = bcryptjs.compareSync(password, query.password);
@@ -58,7 +58,7 @@ export const login: controllerType = async (req, res, next) => {
                     }).status(200).json(rest)
 
                 } else {
-                    res.status(401).json({message: "Password is incorrect"})
+                    res.status(401).json({message: "Email or Password is incorrect"})
                 }
             }
         } else {
@@ -75,8 +75,9 @@ export const deleteUser: controllerType = async (req, res, next) => {
     try {
         const response = await userModel.findByIdAndDelete(req.params.id)
         if (!response) {
-            return next(customError("user doesn't exists", 404));
+            return next(customError("User doesn't exists", 404));
         }
+        await wishLists.findOneAndDelete({user: new mongoose.Types.ObjectId(req.params.id)});
         res.status(200).json({message: "deleted user successfully"})
     } catch (e) {
         next(e)
@@ -86,6 +87,7 @@ export const deleteUser: controllerType = async (req, res, next) => {
 
 
 import {Document} from 'mongoose';
+import wishLists from "../models/wishLists";
 
 export interface IUser {
     userName: string;

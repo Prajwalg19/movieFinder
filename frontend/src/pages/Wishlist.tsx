@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
-import axios from "../utils/axios"
-import {movieSearchType} from "@/utils/types";
+import {movieSearchType} from "@/types/types";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/redux/store";
 import MovieCard from "@/components/MovieCard";
@@ -8,6 +7,10 @@ import {addcurrentWishlist} from "@/redux/slices/wishlistSlice";
 import {motion} from "framer-motion";
 import {SearchPageSkeleton} from "@/components/Skeleton";
 import {ProgressBar} from "@/components/ProgressBar";
+import Typo from "@/Typography";
+import {handleFetchWislist} from "@/services/wishlist/wishlist";
+import {logOut} from "@/redux/slices/userSlice";
+import toast from "react-hot-toast";
 
 function Wishlist() {
     const [loading, setLoading] = useState(true);
@@ -36,16 +39,27 @@ function Wishlist() {
         async function fetchwishlist() {
             try {
                 setLoading(true)
-                const response = await axios.get(`/movie/fetchwishlist/${user?._id}`);
-                if (response) {
-                    setCardData(response.data);
-                    setFilteredData(response.data);
-                    let arr;
-                    arr = response.data.map((item: movieSearchType) => item?.imdbID)
-                    dispatch(addcurrentWishlist(arr));
+                if (!user?._id) {
+                    dispatch(logOut());
+                    return
                 }
-                setLoading(false)
-            } catch (e) {
+                const response = await handleFetchWislist(user?._id);
+                if (response) {
+                    setCardData(response);
+                    setFilteredData(response);
+                    let arr;
+                    arr = response.map((item: movieSearchType) => item?.imdbID)
+                    dispatch(addcurrentWishlist(arr));
+                } else {
+                    toast.error("Unexpected error occured");
+                }
+            } catch (e: unknown) {
+                if (e instanceof Error) {
+                    toast.error(e.message);
+                } else {
+                    toast.error("Internal server error")
+                }
+            } finally {
                 setLoading(false)
             }
         }
@@ -69,14 +83,14 @@ function Wishlist() {
             {loading ? (
                 <SearchPageSkeleton />
             ) : cardData.length === 0 ? (
-                <div className="font-clashSemiBold text-3xl min-h-screen flex justify-center items-center">Your wishlist is empty</div>
+                <Typo variant="h4" className="font-clashSemiBold min-h-screen flex justify-center items-center">Your wishlist is empty</Typo>
             ) : (
                 <>
                     <div className="flex justify-center my-5">
                         <select
                             value={filter}
                             onChange={handleFilterChange}
-                            className="dark:text-white dark:bg-black text-black p-2 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="dark:text-white dark:bg-black text-black p-2 font-clashRegular rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="all">All</option>
                             <option value="movie">Movies</option>

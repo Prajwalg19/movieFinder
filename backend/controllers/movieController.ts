@@ -29,6 +29,9 @@ export const getMovie: controllerType = async (req, res, next) => {
     try {
         const {imdbID} = req.params;
         const response = await axios.get(`&i=${imdbID}&plot=full`)
+        if (!response) {
+            res.status(404).json({message: "Page not found"})
+        }
         res.json(response.data);
     }
     catch (e) {

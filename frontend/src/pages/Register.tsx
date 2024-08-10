@@ -3,48 +3,42 @@ import {Spinner} from "flowbite-react";
 import {Label} from "flowbite-react";
 import {Button} from "flowbite-react";
 import {Formik} from "formik";
-import axios from "@/utils/axios"
 import toast from "react-hot-toast";
-import {AxiosError} from "axios";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {registerSchema} from "../utils/validateSchema"
+import {BsEyeSlashFill, BsFillEyeFill} from "react-icons/bs";
+import {handleRegister} from "@/services/auth/register";
 const Register = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [visible2, setVisible2] = useState(false);
     const formData = {
         email: "",
         password: "",
         userName: "",
+        confirmPassword: ""
     }
     async function onSubmit(value: typeof formData) {
         setLoading(true);
         try {
-            await axios.post("/auth/register", {
-                email: value.email.trim(),
-                password: value.password,
-                userName: value.userName
-            })
-            navigate("/login");
-            toast.success("User created successfully")
-            setLoading(false);
-
+            const {userName, password, email} = value;
+            const response = await handleRegister({userName, password, email});
+            if (response == 201) {
+                navigate("/login");
+                toast.success("User registered successfully");
+            } else {
+                toast.error("An error occured");
+            }
         } catch (e: unknown) {
-            console.log(e)
-            if (e instanceof AxiosError) {
-                if (e.response?.status == 400) {
-                    toast.error("All fields are required");
-                } else if (e.response?.status == 409) {
-                    toast.error(e.response.data.message)
-                }
+            if (e instanceof Error) {
+                toast.error(e.message);
             } else {
                 toast.error("Something went wrong")
             }
-
             setLoading(false);
         }
-
-
     }
     return (
         <main className="min-h-screen h-full w-full flex justify-center items-center font-clashSemiBold">
@@ -77,9 +71,21 @@ const Register = () => {
                             </div>
                             <div className="h-[6rem]">
                                 <Label value="Password" className="text-lg text-white" />
-                                <input placeholder="********" onBlur={handleBlur} value={values.password} type="password" id="password" onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
-                                {touched.password && errors.password ? <span className="text-red-500 text-xs">{errors.password}</span> : null}
+                                <div className="relative w-full h-full">
+                                    <input placeholder="*******" onBlur={handleBlur} value={values.password} type={visible ? "text" : 'password'} id="password" onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
+                                    {visible ? <BsEyeSlashFill className="cursor-pointer absolute right-4 top-4" onClick={() => setVisible(!visible)} /> : <BsFillEyeFill className="absolute right-4 top-4 cursor-pointer" onClick={() => setVisible(!visible)} />}
+                                    {touched.password && errors.password ? <span className="text-red-500 text-sm">{errors.password}</span> : null}
+                                </div>
                             </div>
+                            <div className="h-[6rem]">
+                                <Label value="Confirm Password" className="text-lg text-white" />
+                                <div className="relative w-full h-full">
+                                    <input placeholder="*******" onBlur={handleBlur} value={values.confirmPassword} type={visible2 ? "text" : 'password'} id="confirmPassword" onChange={handleChange} className="!bg-gray-800 px-2 py-3 w-full rounded-md text-white" />
+                                    {visible2 ? <BsEyeSlashFill className="cursor-pointer absolute right-4 top-4" onClick={() => setVisible2(!visible2)} /> : <BsFillEyeFill className="absolute right-4 top-4 cursor-pointer" onClick={() => setVisible2(!visible2)} />}
+                                    {touched.confirmPassword && errors.confirmPassword ? <span className="text-red-500 text-sm">{errors.confirmPassword}</span> : null}
+                                </div>
+                            </div>
+
                             <div className="flex flex-col gap-3 justify-center">
                                 <Button className="!bg-red-700 hover:!bg-red-800" type="submit" disabled={loading}>
                                     {!loading ? (<div className="font-semibold">Register</div>) : <><Spinner size="sm" /><span className="pl-3">Loading...</span></>}

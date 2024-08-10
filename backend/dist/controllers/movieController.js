@@ -24,7 +24,7 @@ const searchMovie = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             return next((0, customError_1.default)("Enter a movie title", 400));
         }
         const response = yield axios_1.default.get(`&s=${searchTerm}&page=${page}&plot=${plot}&y=${year}&type=${type}`);
-        res.json(response.data);
+        res.status(200).json(response.data);
     }
     catch (e) {
         next(e);
@@ -34,8 +34,10 @@ exports.searchMovie = searchMovie;
 const getMovie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { imdbID } = req.params;
-        console.log(req.params);
         const response = yield axios_1.default.get(`&i=${imdbID}&plot=full`);
+        if (!response) {
+            res.status(404).json({ message: "Page not found" });
+        }
         res.json(response.data);
     }
     catch (e) {

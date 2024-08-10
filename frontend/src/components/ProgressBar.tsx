@@ -6,7 +6,7 @@ export function ProgressBar({movies, series, episodes}: {movies: number, series:
     const episodePercentage = (episodes / total) * 100;
 
     return (
-        <div className="w-full h-6 flex rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 relative">
+        <div className="font-clashBold w-full h-6 flex rounded-full overflow-hidden bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 relative">
             {
                 movies > 0 && (
                     <div style={{width: `${moviePercentage}%`}} className="bg-blue-700 flex items-center justify-center relative">
@@ -17,7 +17,7 @@ export function ProgressBar({movies, series, episodes}: {movies: number, series:
             {
                 series > 0 && (
                     <div style={{width: `${seriesPercentage}%`}} className="bg-green-400 flex items-center justify-center relative">
-                        <span className="absolute inset-0 flex items-center justify-center text-white text-sm">{`S(${series})`}</span>
+                        <span className="absolute inset-0 flex items-center justify-center text-white text-sm truncate">{`S(${series})`}</span>
                     </div>
 
                 )

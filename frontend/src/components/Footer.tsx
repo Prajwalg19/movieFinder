@@ -1,3 +1,4 @@
+import Typo from "@/Typography";
 import {BiSolidMessageDetail} from "react-icons/bi";
 import {FaPhone} from "react-icons/fa6";
 import {Link} from "react-router-dom";
@@ -9,7 +10,7 @@ export default function Footer() {
                 <section className="flex flex-col items-center lg:items-start gap-5">
                     <div className="font-clashSemiBold flex gap-3 items-center">
                         <img src="/movie.png" alt="icon" className="h-6 w-auto" />
-                        <p><span className="text-red-700">Movie</span><span> Finder</span></p>
+                        <Typo variant="h5"><span className="text-red-700">Movie</span><span> Finder</span></Typo>
                     </div>
                     <div className="font-clashRegular tracking-wider flex items-center gap-3">
                         <BiSolidMessageDetail className="text-xl text-red-700" />
@@ -21,26 +22,26 @@ export default function Footer() {
                     </div>
                 </section>
 
-                <section className="font-clashRegular tracking-wider flex flex-col items-center lg:items-start gap-5">
-                    <p className="text-3xl font-clashSemiBold">Links</p>
+                <Typo variant="body" className="flex flex-col items-center lg:items-start gap-5">
+                    <Typo variant="h4" className="text-3xl font-clashSemiBold">Links</Typo>
                     <Link to="/">Home</Link>
                     <a href="https://www.prajwal19.me">About Me</a>
                     <p >Contact</p>
-                </section>
+                </Typo>
 
-                <section className="font-clashRegular tracking-wider flex flex-col items-center lg:items-start gap-5">
-                    <p className="text-3xl font-clashSemiBold">Legal</p>
+                <Typo variant="body" className="flex flex-col items-center lg:items-start gap-5">
+                    <Typo variant="h4" className="font-clashSemiBold">Legal</Typo>
                     <p>Terms Of Use</p>
                     <p>Privacy Policy</p>
                     <p>Cookie Policy</p>
-                </section>
+                </Typo>
 
-                <section className="flex flex-col items-center font-clashRegular tracking-wider lg:items-start gap-5 w-full lg:w-auto">
-                    <p className="text-3xl font-clashSemiBold">Product</p>
+                <Typo variant="body" className="flex flex-col items-center lg:items-start gap-5 w-full lg:w-auto">
+                    <Typo variant="h4" className="font-clashSemiBold">Product</Typo>
                     <p>Take Tour</p>
                     <p>Live Chat</p>
                     <p>Reviews</p>
-                </section>
+                </Typo>
             </div>
             <hr className="my-10" />
             <p className="text-center text-gray-600 text-xs dark:text-gray-300/90 font-clashSemiBold tracking-wider">Copyright 2024 Prajwal&copy;, All Rights Reserved</p>

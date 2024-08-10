@@ -32,5 +32,5 @@ app.use("/movie", movieRoutes_1.default);
 app.use((error, _, res, __) => {
     const statusCode = error.statusCode || 500;
     const message = error.message || "Internal Server Error";
-    res.status(statusCode).json(message);
+    res.status(statusCode).json({ message });
 });

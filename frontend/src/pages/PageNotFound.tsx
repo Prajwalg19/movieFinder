@@ -1,8 +1,9 @@
+import Typo from "@/Typography"
 export default function PageNotFound() {
     return (
-        <div className="min-h-screen flex justify-center items-center font-clashBold text-4xl tracking-wide">
+        <Typo variant="h3" className="min-h-screen flex justify-center items-center font-clashBold tracking-wide">
             404 Page not Found
-        </div>
+        </Typo>
     )
 
 }

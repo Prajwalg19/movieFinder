@@ -29,6 +29,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const mongoose_1 = __importDefault(require("mongoose"));
 dotenv_1.default.config();
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName, password, email } = req.body;
@@ -43,14 +44,14 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         const query = new userModel_1.default({
             userName,
             password: hashedPass,
-            email
+            email: email.toLowerCase()
         });
         yield query.save();
-        res.status(201).json("user created successfully");
+        res.status(201).json({ message: "User created successfully" });
     }
     catch (e) {
         if (isMongoServerError(e)) {
-            next((0, customError_1.default)("Email or Username already exists", 409));
+            next((0, customError_1.default)("Account already exists", 409));
         }
         else {
             next(e);
@@ -64,7 +65,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         if (!email || !password || email == "" || password == "") {
             return next((0, customError_1.default)("All fields are required", 400));
         }
-        const query = yield userModel_1.default.findOne({ email: email });
+        const query = yield userModel_1.default.findOne({ email: email.toLowerCase() });
         if (query) {
             if (query.password) {
                 const isPassword = bcrypt_1.default.compareSync(password, query.password);
@@ -77,7 +78,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                     }).status(200).json(rest);
                 }
                 else {
-                    res.status(401).json({ message: "Password is incorrect" });
+                    res.status(401).json({ message: "Email or Password is incorrect" });
                 }
             }
         }
@@ -94,8 +95,9 @@ const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const response = yield userModel_1.default.findByIdAndDelete(req.params.id);
         if (!response) {
-            return next((0, customError_1.default)("user doesn't exists", 404));
+            return next((0, customError_1.default)("User doesn't exists", 404));
         }
+        yield wishLists_1.default.findOneAndDelete({ user: new mongoose_1.default.Types.ObjectId(req.params.id) });
         res.status(200).json({ message: "deleted user successfully" });
     }
     catch (e) {
@@ -103,6 +105,7 @@ const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.deleteUser = deleteUser;
+const wishLists_1 = __importDefault(require("../models/wishLists"));
 const Oauth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { displayName, photoURL, email } = req.body;

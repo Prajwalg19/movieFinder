@@ -1,10 +1,10 @@
 import MovieCard from "@/components/MovieCard";
 import {FaSearch} from "react-icons/fa";
 import {useEffect, useState, useCallback} from "react";
-import axios from "../utils/axios";
+import axios from "@/services/axios";
 import toast from "react-hot-toast";
-import {AxiosError} from "axios";
-import {movieSearchType} from "@/utils/types";
+import {all, AxiosError} from "axios";
+import {movieSearchType} from "@/types/types";
 import {useLocation, useNavigate} from "react-router-dom";
 import debounce from 'lodash.debounce';
 import {SearchPageSkeleton} from "@/components/Skeleton";
@@ -33,7 +33,7 @@ export default function Search() {
     useEffect(() => {
         if (searchTerm === "") return;
         getMovieData();
-    }, [searchParam.page, searchParam.type, searchParam.year, searchParam.plot, allQueryParams.get("searchTerm")]);
+    }, [page, type, year, plot, allQueryParams.get("searchTerm")]);
 
     useEffect(() => {
         const params = {
@@ -82,9 +82,9 @@ export default function Search() {
         } catch (e: unknown) {
             if (e instanceof AxiosError && e.response) {
                 if (e.response.status === 400) {
-                    toast.error("Bad request");
+                    toast.error("Enter a value");
                 } else if (e.response.status === 404) {
-                    toast.error("Request Not Found");
+                    toast.error("Movie or Series not Found");
                 } else if (e.response.status === 403) {
                     toast.error("User not logged in");
                 }

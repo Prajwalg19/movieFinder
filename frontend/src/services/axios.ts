@@ -1,9 +1,9 @@
 import axios from "axios";
+import {BASE_ENDPOINT} from "./apis";
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    // baseURL: "http://localhost:4000",
-    baseURL: "https://movie-finder-eight-silk.vercel.app"
+    baseURL: BASE_ENDPOINT,
 })
 
 export default axiosInstance;

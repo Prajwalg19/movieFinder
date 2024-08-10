@@ -6,12 +6,12 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import "../index.css"
 // import {Pagination} from 'swipr/modules';
-import axios from '../utils/axios'
 import {motion} from 'framer-motion';
-import {movieSearchType} from "@/utils/types";
+import {movieSearchType} from "@/types/types";
 import {SwiperSlideSkeleton} from "@/components/Skeleton";
 import {FaSearch} from "react-icons/fa";
 import toast from "react-hot-toast";
+import {fetchHomePageMovies} from "@/services/omdb/omdbApis";
 
 
 export default function Home() {
@@ -25,20 +25,17 @@ export default function Home() {
             async function fetchMovie() {
                 try {
                     setLoading(true);
-                    const response = await axios.get("/movie/search?searchTerm=action&type=movie&year=2020")
-                    if (response && response.data) {
-                        if (response.data.Response == "True") {
-                            setData(response.data.Search)
-                        } else {
-                            toast.error("Oops! Network Problem");
-                        }
-                    }
-                    else {
-                        toast.error("Something went wrong");
+                    const response = await fetchHomePageMovies()
+                    if (response) {
+                        setData(response);
                     }
                 }
                 catch (e) {
-                    toast.error("Something went wrong")
+                    if (e instanceof Error) {
+                        toast.error(e.message);
+                    } else {
+                        toast.error("Something went wrong")
+                    }
                 } finally {
                     setLoading(false);
                 }

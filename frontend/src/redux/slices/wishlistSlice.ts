@@ -1,4 +1,4 @@
-import {movieSearchType} from "@/utils/types";
+import {movieSearchType} from "@/types/types";
 import {createSlice} from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 

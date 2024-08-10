@@ -14,6 +14,7 @@ import {changeTheme} from "@/redux/slices/themeSlice";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleLine} from "react-icons/ri";
 import {logOutClear} from "@/redux/slices/wishlistSlice";
+import Typo from "@/Typography";
 export default function Header() {
     const [sideBar, setSideBar] = useState(false);
     const dispatch = useDispatch();
@@ -25,13 +26,14 @@ export default function Header() {
         user.currentUser && (location.pathname != "/" && location.pathname != "/login" && location.pathname != "/register") ? (
             <motion.div initial={{opacity: 0, y: -30}} animate={{opacity: 1, y: 0}} className="w-full z-50 lg:py-4 py-2 px-3 md:px-10 dark:bg-gray-950 bg-slate-100">
                 <section className="flex justify-between items-center">
-                    <span className="z-10  font-clashSemiBold text-lg tracking-wider hidden lg:flex flex-row gap-10 items-center">
+                    <Typo variant="p" className="z-10  font-clashSemiBold tracking-wider hidden lg:flex flex-row gap-10 items-center">
                         <Link to="/" className="dark:bg-slate-300  dark:rounded-3xl"><img src="/movie.png" className="h-10" alt="icon" /></Link>
                         <Link to="/home" className={`cursor-pointer ${location.pathname == "/home" ? "text-red-700" : ""} `} >Home</Link>
                         <Link to="/search?searchTerm=" className={`cursor-pointer ${location.pathname == "/search" ? "text-red-700" : ""}`}>Search</Link>
                         <Link to="/wishlist" className={`cursor-pointer ${location.pathname == "/wishlist" ? "text-red-700" : ""}`}>My Wishlists</Link>
-                    </span>
-                    <section
+                    </Typo>
+                    <Typo
+                        variant="h6"
                         className="lg:flex flex-row hidden gap-10 items-center"
                     >
                         <button className="transition-all border border-black/15 bg-slate-50 dark:bg-gray-950 dark:border-slate-600 px-3 py-3 rounded-full z-50" onClick={() => dispatch(changeTheme())}>{currentTheme == "dark" ? <FaMoon className="text-white" /> : (<FaSun />)}</button>
@@ -65,11 +67,11 @@ export default function Header() {
                                 </div>
                             </Dropdown.Item>
                         </Dropdown>
-                    </section>
+                    </Typo>
                     <span className="z-50 lg:hidden text-2xl flex w-full justify-between flex-row gap-5 items-center">
                         <button onClick={() => setSideBar(!sideBar)} >                        <FiMenu className="text-3xl" />
                         </button>
-                        <div className="flex flex-row gap-6 items-center">
+                        <Typo variant="p" className="flex flex-row gap-6 items-center">
                             <button className="transition-all border border-black/15 bg-slate-50 dark:bg-gray-950 dark:border-slate-600 md:p-3 rounded-full z-50 p-2" onClick={() => dispatch(changeTheme())}>{currentTheme == "dark" ? <FaMoon className="text-white" /> : (<FaSun />)}</button>
                             <Dropdown
                                 label={
@@ -101,7 +103,7 @@ export default function Header() {
                                 </Dropdown.Item>
                             </Dropdown>
 
-                        </div>
+                        </Typo>
                     </span>
                 </section>
 
@@ -115,12 +117,12 @@ export default function Header() {
                         </button>
                     </div>
                     <section className="flex flex-col items-center gap-10 mt-36">
-                        <span className="flex flex-col items-center gap-12 font-clashSemiBold text-2xl">
+                        <Typo variant="h5" className="flex flex-col items-center gap-12 font-clashSemiBold">
                             <Link to="/home" className={`cursor-pointer ${location.pathname == "/home" ? "text-red-700" : ""} `} onClick={() => setSideBar(false)}>Home</Link>
                             <Link to="/search?searchTerm=" className={`cursor-pointer ${location.pathname == "/search" ? "text-red-700" : ""}`} onClick={() => setSideBar(false)}>Search</Link>
                             <Link to="/wishlist" className={`cursor-pointer ${location.pathname == "/wishlist" ? "text-red-700" : ""} `} onClick={() => setSideBar(false)}>My Wishlists</Link>
                             <Link to="/profile" className={`cursor-pointer ${location.pathname == "/profile" ? "text-red-700" : ""} `} onClick={() => setSideBar(false)}>Profile</Link>
-                        </span>
+                        </Typo>
                     </section>
                 </nav>
 

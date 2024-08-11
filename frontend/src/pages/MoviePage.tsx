@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import axios from "@/services/axios";
 import {useParams} from "react-router-dom";
 import {movieSpecificType} from "@/types/types";
 import toast from "react-hot-toast";
@@ -8,7 +7,7 @@ import {FaCalendarAlt, FaClock, FaImdb, FaStar, FaThumbsUp} from 'react-icons/fa
 import {SiRottentomatoes} from "react-icons/si";
 import {MdOutlineMovie} from 'react-icons/md';
 import {motion} from 'framer-motion';
-import PageNotFound from "./PageNotFound";
+import PageNotFound from "@/components/PageNotFound";
 import Typo from "@/Typography";
 import {handleMovieDetailsFetch} from "@/services/omdb/omdbApis";
 
@@ -20,6 +19,7 @@ export default function MoviePage() {
 
     useEffect(() => {
         const fetchMovieInfo = async () => {
+            window.scrollTo({top: 0, behavior: "smooth"})
             setLoading(true);
             try {
                 if (id) {

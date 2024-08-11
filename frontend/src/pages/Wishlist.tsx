@@ -6,7 +6,7 @@ import MovieCard from "@/components/MovieCard";
 import {addcurrentWishlist} from "@/redux/slices/wishlistSlice";
 import {motion} from "framer-motion";
 import {SearchPageSkeleton} from "@/components/Skeleton";
-import {ProgressBar} from "@/components/ProgressBar";
+import {ProgressBar} from "@/components/Utils/ProgressBar";
 import Typo from "@/Typography";
 import {handleFetchWislist} from "@/services/wishlist/wishlist";
 import {logOut} from "@/redux/slices/userSlice";

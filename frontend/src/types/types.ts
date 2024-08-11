@@ -42,3 +42,10 @@ export interface movieSpecificType {
     Error?: String
 }
 
+export interface SearchParams {
+    searchTerm: string;
+    page: number;
+    plot: string | null;
+    year: string | null;
+    type: string | null;
+}

@@ -1,11 +1,12 @@
-// const base_endpoint = "https://movie-finder-eight-silk.vercel.app";
-export const BASE_ENDPOINT = "http://localhost:4000";
+export const BASE_ENDPOINT = "https://movie-finder-eight-silk.vercel.app";
+// export const BASE_ENDPOINT = "http://localhost:4000";
 
 export const OMDB_ENDPOINTS = {
     HOME_PAGE_OMDB_ENDPOINT: "/movie/search?searchTerm=action&type=movie&year=2020",
     GET_MOVIE_BY_ID: "/movie",
     GET_MY_WISHLIST: "/movie/fetchwishlist",
-    UPDATE_WISHLIST: "/movie/updatewishlist"
+    UPDATE_WISHLIST: "/movie/updatewishlist",
+    SEARCH: "/movie/search"
 }
 
 export const AUTH_ENDPOINTS = {

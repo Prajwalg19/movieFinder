@@ -1,7 +1,7 @@
-import Divider from "@/components/Divider"
-import FAQ from "@/components/FAQ"
-import Info from "@/components/Info"
-import Intro from "@/components/Intro"
+import Divider from "@/components/Utils/Divider"
+import FAQ from "@/components/LandingPage/FAQ"
+import Info from "@/components/LandingPage/Info"
+import Intro from "@/components/LandingPage/Intro"
 import {changeTheme} from "@/redux/slices/themeSlice";
 import {RootState} from "@/redux/store";
 import {FaMoon, FaSun} from "react-icons/fa";

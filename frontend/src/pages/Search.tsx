@@ -1,13 +1,13 @@
-import MovieCard from "@/components/MovieCard";
-import {FaSearch} from "react-icons/fa";
-import {useEffect, useState, useCallback} from "react";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "@/services/axios";
 import toast from "react-hot-toast";
-import {all, AxiosError} from "axios";
-import {movieSearchType} from "@/types/types";
-import {useLocation, useNavigate} from "react-router-dom";
-import debounce from 'lodash.debounce';
+import {FaSearch} from "react-icons/fa";
+import MovieCard from "@/components/MovieCard";
 import {SearchPageSkeleton} from "@/components/Skeleton";
+import {movieSearchType} from "@/types/types";
+import {AxiosError} from "axios";
+import {OMDB_ENDPOINTS} from "@/services/apis";
 
 export default function Search() {
     const [loading, setLoading] = useState(false);
@@ -17,110 +17,92 @@ export default function Search() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const queryString = location.search;
-    const allQueryParams = new URLSearchParams(queryString);
-
-    const [searchParam, setSearchParam] = useState({
-        searchTerm: allQueryParams.get("searchTerm") ?? "",
-        page: parseInt(allQueryParams.get("page") ?? "1", 10),
-        plot: allQueryParams.get('plot') ?? null,
-        year: allQueryParams.get('year') ?? null,
-        type: allQueryParams.get('type') ?? null
+    const [searchParams, setSearchParams] = useState({
+        searchTerm: "",
+        page: 1,
+        type: "",
+        year: "",
+        plot: "",
     });
 
-    const {searchTerm, page, plot, year, type} = searchParam;
+    const {page, plot, searchTerm, type, year} = searchParams
 
     useEffect(() => {
-        if (searchTerm === "") return;
         getMovieData();
-    }, [page, type, year, plot, allQueryParams.get("searchTerm")]);
-
-    useEffect(() => {
-        const params = {
-            searchTerm: allQueryParams.get("searchTerm") ?? "",
-            page: parseInt(allQueryParams.get("page") ?? "1", 10),
-            plot: allQueryParams.get('plot') ?? null,
-            year: allQueryParams.get('year') ?? null,
-            type: allQueryParams.get('type') ?? null
-        };
-        setSearchParam(params);
-    }, [queryString]);
-
-    const debouncedSearch = useCallback(
-        debounce((newSearchTerm) => {
-            setSearchParam((prev) => ({...prev, searchTerm: newSearchTerm, page: 1}));
-            updateUrlParams({searchTerm: newSearchTerm, page: 1});
-        }, 1500), []
-    );
+    }, [location.search]);
 
     async function getMovieData() {
         try {
             setLoading(true);
-            const searchParams = new URLSearchParams({
-                searchTerm: searchTerm.trim(),
-                page: page.toString(),
-                type: type ?? "",
-                year: year ?? "",
-                plot: plot ?? ""
+            const allParams = new URLSearchParams(location.search);
+            const searchTerm = allParams.get("searchTerm");
+            const page = allParams.get("page");
+            const type = allParams.get("type");
+            const year = allParams.get("year");
+            const plot = allParams.get("plot");
+            const params = new URLSearchParams({
+                searchTerm: searchTerm?.trim() || "",
+                page: page || "1",
+                type: type || "",
+                year: year || "",
+                plot: plot || "",
             }).toString();
 
-            const response = await axios.get(`/movie/search?${searchParams}`);
-            if (response && response.data) {
-                if (response.data.Response === "True") {
-                    setMovieData(response.data.Search);
-                    setTotalResults(Number(response.data.totalResults));
-                    setMessage(null);
-                } else {
-                    setMessage(response.data.Error || "Something went wrong");
-                    setMovieData([]);
-                }
-            } else {
-                toast.error("Something went wrong, Let's give it another try");
-                setMovieData([]);
+            setSearchParams({
+                searchTerm: searchTerm?.trim() || "",
+                page: Number(page) || 1,
+                type: type || "",
+                year: year || "",
+                plot: plot || "",
+            })
+            if (searchTerm == "") return;
+            const response = await axios.get(`${OMDB_ENDPOINTS.SEARCH}?${params}`);
+            if (response?.data?.Response === "True") {
+                setMovieData(response.data.Search);
+                setTotalResults(Number(response.data.totalResults));
                 setMessage(null);
+            } else {
+                setMessage(response.data.Error || "Something went wrong");
+                setMovieData([]);
             }
         } catch (e: unknown) {
-            if (e instanceof AxiosError && e.response) {
-                if (e.response.status === 400) {
-                    toast.error("Enter a value");
-                } else if (e.response.status === 404) {
-                    toast.error("Movie or Series not Found");
-                } else if (e.response.status === 403) {
-                    toast.error("User not logged in");
-                }
-            } else {
-                toast.error("Something went wrong");
-            }
-            setMovieData([]);
-            setMessage(null);
+            handleError(e);
         } finally {
             setLoading(false);
         }
     }
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-        setSearchParam((prev) => ({
+    function handleError(e: unknown) {
+        if (e instanceof AxiosError && e.response) {
+            if (e.response.status === 400) {
+                toast.error("Enter a value");
+            } else if (e.response.status === 404) {
+                toast.error("Movie or Series not Found");
+            } else if (e.response.status === 403) {
+                toast.error("User not logged in");
+            }
+        } else {
+            toast.error("Something went wrong");
+        }
+        setMovieData([]);
+        setMessage(null);
+    }
+
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+        setSearchParams((prev) => ({
             ...prev,
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
         }));
     }
 
-    function handleSearchTermChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const newSearchTerm = e.target.value;
-        setSearchParam((prev) => ({...prev, searchTerm: newSearchTerm}));
-        debouncedSearch(newSearchTerm);
+    function handleSearch(page = 1) {
+        const query = `?searchTerm=${searchTerm}&page=${page}&type=${type}&year=${year}&plot=${plot}`
+        navigate(`/search${query}`);
     }
-
-    function updateUrlParams(newParams: any) {
-        const queryString = new URLSearchParams({...searchParam, ...newParams}).toString();
-        navigate(`/search?${queryString}`);
-    }
-
 
     function handlePageChange(newPage: number) {
-        setSearchParam((prev) => ({...prev, page: newPage}));
-        updateUrlParams({page: newPage});
         window.scrollTo({top: 0, behavior: 'smooth'});
+        handleSearch(newPage)
     }
 
     function renderPageNumbers() {
@@ -133,40 +115,27 @@ export default function Search() {
             startPage = Math.max(1, endPage - maxPageNumbersToShow + 1);
         }
 
-        const pageNumbers = [];
-
-        for (let i = startPage; i <= endPage; i++) {
-            pageNumbers.push(
-                <button
-                    key={i}
-                    className={` border border-slate-300 px-4 py-2 mx-1 dark:bg-gray-800 dark:text-white ${page === i ? 'dark:bg-red-700 bg-red-700 text-white' : 'bg-white text-black'} rounded-md`}
-                    onClick={() => handlePageChange(i)}
-                >
-                    {i}
-                </button>
-            );
-        }
-
-        return pageNumbers;
+        return Array.from({length: endPage - startPage + 1}, (_, i) => startPage + i).map((i) => (
+            <button
+                key={i}
+                className={`border border-slate-300 px-4 py-2 mx-1 dark:bg-gray-800 dark:text-white ${searchParams.page === i ? 'dark:bg-red-700 bg-red-700 text-white' : 'bg-white text-black'
+                    } rounded-md`}
+                onClick={() => handlePageChange(i)}
+            >
+                {i}
+            </button>
+        ));
     }
 
     return (
-        <div className="min-h-screen text-black dark:text-slate-100 scroll-mt-10" id="top">
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    setSearchParam((prev) => ({...prev, page: 1}));
-                    updateUrlParams({page: 1});
-                    getMovieData();
-                }}
-                className="w-full justify-center flex flex-col sm:flex-row gap-4 dark:text-white text-black font-clashSemiBold my-10 px-3"
-            >
+        <div className="min-h-screen text-black dark:text-slate-100 scroll-mt-10">
+            <form onSubmit={(e) => {e.preventDefault(); handleSearch();}} className="w-full justify-center flex flex-col sm:flex-row gap-4 dark:text-white text-black font-clashSemiBold my-10 px-3">
                 <div className="relative w-full sm:w-[600px]">
                     <input
-                        value={searchTerm}
+                        value={searchParams.searchTerm}
                         type="text"
                         id="searchTerm"
-                        onChange={handleSearchTermChange}
+                        onChange={handleChange}
                         className="rounded-md text-lg sm:text-xl py-2 px-3 w-full dark:bg-black/90 dark:text-slate-300 pl-10"
                         placeholder="Search Movies"
                     />
@@ -179,12 +148,12 @@ export default function Search() {
                     Search
                 </button>
                 <select
-                    value={type ?? ""}
-                    onChange={(e) => {handleChange(e); updateUrlParams({type: e.target.value});}}
+                    value={searchParams.type}
+                    onChange={handleChange}
                     className="text-black dark:text-white dark:bg-black border-slate-500 border rounded-md py-2 px-3 w-full sm:w-auto"
                     id="type"
                 >
-                    <option disabled hidden value="">Type</option>
+                    <option value="" hidden>Type</option>
                     <option value="movie">Movie</option>
                     <option value="series">Series</option>
                     <option value="episode">Episode</option>
@@ -210,21 +179,21 @@ export default function Search() {
                     {movieData.length > 0 && (
                         <div className="flex justify-center items-center px-2 gap-3 flex-wrap text-white">
                             <button
-                                disabled={page === 1}
-                                onClick={() => handlePageChange(page - 1)}
+                                disabled={searchParams.page === 1}
+                                onClick={() => handlePageChange(searchParams.page - 1)}
                                 className="md:text-lg text-sm font-clashSemiBold rounded-md bg-black border border-slate-700 px-3 py-2 disabled:bg-gray-500"
                             >
-                                <a href="#top">Prev</a>
+                                Prev
                             </button>
                             <div className="flex flex-wrap md:text-lg text-sm justify-center items-center gap-2 text-white">
                                 {renderPageNumbers()}
                             </div>
                             <button
-                                disabled={page * 10 >= totalResults}
-                                onClick={() => handlePageChange(page + 1)}
+                                disabled={searchParams.page * 10 >= totalResults}
+                                onClick={() => handlePageChange(searchParams.page + 1)}
                                 className="md:text-lg text-sm disabled:bg-gray-600 border rounded-md font-clashSemiBold bg-black border-slate-500 px-3 py-2"
                             >
-                                <a href="#top">Next </a>
+                                Next
                             </button>
                         </div>
                     )}

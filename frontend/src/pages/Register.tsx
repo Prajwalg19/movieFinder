@@ -37,6 +37,8 @@ const Register = () => {
             } else {
                 toast.error("Something went wrong")
             }
+        }
+        finally {
             setLoading(false);
         }
     }

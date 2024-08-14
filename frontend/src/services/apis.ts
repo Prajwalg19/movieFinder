@@ -1,5 +1,5 @@
-// export const BASE_ENDPOINT = "https://movie-finder-eight-silk.vercel.app";
-export const BASE_ENDPOINT = "http://localhost:4000";
+export const BASE_ENDPOINT = "https://movie-finder-eight-silk.vercel.app";
+// export const BASE_ENDPOINT = "http://localhost:4000";
 
 export const OMDB_ENDPOINTS = {
     HOME_PAGE_OMDB_ENDPOINT: "/movie/search?searchTerm=action&type=movie&year=2020",

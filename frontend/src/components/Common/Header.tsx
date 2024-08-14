@@ -41,7 +41,7 @@ export default function Header() {
                         <Dropdown
                             label={
                                 <Avatar
-                                    alt="User settings"
+                                    alt="Profile"
                                     img={user.currentUser.userPfp}
                                     rounded
                                     bordered
@@ -76,7 +76,7 @@ export default function Header() {
                             <Dropdown
                                 label={
                                     <Avatar
-                                        alt="User settings"
+                                        alt="Profile"
                                         img={user.currentUser.userPfp}
                                         rounded
                                         bordered
@@ -94,7 +94,7 @@ export default function Header() {
                                     </div>
                                 </Dropdown.Item>
                                 <Dropdown.Divider />
-                                <Dropdown.Item onClick={() => {dispatch(logOut());}}>
+                                <Dropdown.Item onClick={() => {dispatch(logOut()); dispatch(logOutClear())}}>
                                     <div className="flex gap-3 items-center">
                                         <RiLogoutCircleLine />
                                         <p>Sign out </p>
@@ -107,7 +107,7 @@ export default function Header() {
                     </span>
                 </section>
 
-                <nav className={`dark:bg-gray-900 fixed inset-0 z-50 bg-slate-50 transition-transform transform duration-200 ${sideBar ? "translate-x-0" : "-translate-x-full"} lg:hidden`}>
+                <nav className={`dark:bg-gray-900 fixed inset-0 z-50 bg-slate-50 transition-transform transform duration-300 ${sideBar ? "translate-x-0" : "-translate-x-full"} lg:hidden`}>
                     <div className="flex justify-between items-center py-2 px-5 text-black text-xl">
                         <Link to="/" onClick={() => setSideBar(false)}>
                             <img src="/movie.png" alt="icon" className="dark:bg-slate-300 dark:p-1 dark:rounded-3xl h-10" />

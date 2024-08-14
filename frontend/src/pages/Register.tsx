@@ -25,20 +25,20 @@ const Register = () => {
         try {
             const {userName, password, email} = value;
             const response = await handleRegister({userName, password, email});
-            if (response == 201) {
+
+            if (response === 201) {
                 navigate("/login");
                 toast.success("User registered successfully");
             } else {
-                toast.error("An error occured");
+                toast.error("An unexpected error occurred during registration.");
             }
         } catch (e: unknown) {
             if (e instanceof Error) {
                 toast.error(e.message);
             } else {
-                toast.error("Something went wrong")
+                toast.error("An unknown error occurred. Please try again later.");
             }
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     }

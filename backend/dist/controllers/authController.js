@@ -31,11 +31,11 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 dotenv_1.default.config();
+function isMongoServerError(e) {
+    return e && e.code == 11000;
+}
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName, password, email } = req.body;
-    function isMongoServerError(e) {
-        return e && e.code == 11000;
-    }
     try {
         if (!userName || !email || !password || userName == "" || email == "" || password == "") {
             return next((0, customError_1.default)("All fields are required", 400));

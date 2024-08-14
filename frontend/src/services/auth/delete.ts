@@ -14,7 +14,7 @@ export async function handleDeleteUser(id: string) {
         if (e instanceof AxiosError && e.response?.status == 404) {
             throw new Error(e.response.data);
         } else {
-            throw new Error("Unexpected error occured");
+            throw e;
         }
     }
 }

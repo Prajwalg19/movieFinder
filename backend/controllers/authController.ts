@@ -9,11 +9,12 @@ dotenv.config();
 
 type controllerType = (req: express.Request, res: express.Response, next: express.NextFunction) => void
 
+function isMongoServerError(e: any) {
+    return e && e.code == 11000;
+}
+
 export const register: controllerType = async (req, res, next) => {
     const {userName, password, email}: {userName: string, password: string, email: string} = req.body;
-    function isMongoServerError(e: any) {
-        return e && e.code == 11000;
-    }
     try {
 
         if (!userName || !email || !password || userName == "" || email == "" || password == "") {

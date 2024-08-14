@@ -11,13 +11,11 @@ const root = document.getElementById("root");
 
 const reactRoot = ReactDOM.createRoot(root!)
 reactRoot.render(
-    <React.StrictMode>
-        <PersistGate persistor={persistor}>
-            <Provider store={store}>
-                <ThemeProvider>
-                    <App />
-                </ThemeProvider>
-            </Provider>
-        </PersistGate>
-    </React.StrictMode>,
+    <PersistGate persistor={persistor}>
+        <Provider store={store}>
+            <ThemeProvider>
+                <App />
+            </ThemeProvider>
+        </Provider>
+    </PersistGate>
 )

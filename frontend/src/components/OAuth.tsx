@@ -30,7 +30,7 @@ const OAuth = () => {
                 navigate("/home");
 
             } else {
-
+                toast.error("Login Failed");
             }
         } catch (e: unknown) {
             if (e instanceof Error) {

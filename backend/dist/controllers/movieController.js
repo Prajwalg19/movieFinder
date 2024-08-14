@@ -96,11 +96,11 @@ const fetchUserWishLists = (req, res, next) => __awaiter(void 0, void 0, void 0,
                     }
                 },
                 {
-                    $unwind: "$moviesData"
+                    $unwind: "$moviesData" // unwinding the array to individual documents
                 },
                 {
                     $replaceRoot: {
-                        newRoot: "$moviesData"
+                        newRoot: "$moviesData" // make the content of each movieData as content of the document
                     }
                 }
             ]);

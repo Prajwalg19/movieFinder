@@ -15,7 +15,7 @@ export async function handleOAuth({displayName, email, photoURL}: {displayName: 
         if (e instanceof AxiosError && e.response) {
             throw new Error(e.response.data.message);
         } else {
-            throw new Error("An unexpected error occurred during OAuth login.");
+            throw e;
         }
     }
 }
@@ -43,7 +43,7 @@ export async function handleLogin(value: {email: string, password: string}) {
                 default: throw new Error("Something went wrong");
             }
         } else {
-            throw new Error("Something went wrong")
+            throw e;
         }
     }
 }

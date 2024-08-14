@@ -70,7 +70,7 @@ function Wishlist() {
         if (filter === "all") {
             setFilteredData(cardData);
         } else {
-            setFilteredData(cardData.filter(item => item!.Type === filter));
+            setFilteredData(cardData.filter(item => item?.Type === filter));
         }
     }, [filter, cardData]);
 

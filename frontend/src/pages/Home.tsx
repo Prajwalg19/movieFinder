@@ -28,6 +28,8 @@ export default function Home() {
                     const response = await fetchHomePageMovies()
                     if (response) {
                         setData(response);
+                    } else {
+                        setData([]);
                     }
                 }
                 catch (e) {

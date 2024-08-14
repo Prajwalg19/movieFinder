@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "@/services/axios";
 import toast from "react-hot-toast";
@@ -16,6 +16,7 @@ export default function Search() {
     const [message, setMessage] = useState<string | null>(null);
     const location = useLocation();
     const navigate = useNavigate();
+    const isMountedRef = useRef(false);
 
     const [searchParams, setSearchParams] = useState({
         searchTerm: "",
@@ -28,7 +29,12 @@ export default function Search() {
     const {page, plot, searchTerm, type, year} = searchParams
 
     useEffect(() => {
-        getMovieData();
+        const isSearched = new URLSearchParams(location.search).get("searchTerm")?.length != 0
+        if (isMountedRef.current || isSearched) {
+            getMovieData();
+        } else {
+            isMountedRef.current = true;
+        }
     }, [location.search]);
 
     async function getMovieData() {
@@ -55,7 +61,10 @@ export default function Search() {
                 year: year || "",
                 plot: plot || "",
             })
-            if (searchTerm == "") return;
+            if (searchTerm?.length == 0) {
+                toast.error("Enter a movie name")
+                return;
+            }
             const response = await axios.get(`${OMDB_ENDPOINTS.SEARCH}?${params}`);
             if (response?.data?.Response === "True") {
                 setMovieData(response.data.Search);
@@ -108,11 +117,13 @@ export default function Search() {
     function renderPageNumbers() {
         const totalPages = Math.ceil(totalResults / 10);
         const maxPageNumbersToShow = 5;
+        console.log(page)
         let startPage = Math.max(1, page - Math.floor(maxPageNumbersToShow / 2));
         let endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
 
         if (endPage - startPage + 1 < maxPageNumbersToShow) {
             startPage = Math.max(1, endPage - maxPageNumbersToShow + 1);
+            // startPage = 1
         }
 
         return Array.from({length: endPage - startPage + 1}, (_, i) => startPage + i).map((i) => (

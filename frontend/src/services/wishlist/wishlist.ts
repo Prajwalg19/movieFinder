@@ -1,6 +1,7 @@
 import {movieSearchType} from "@/types/types";
 import {OMDB_ENDPOINTS} from "../apis";
 import axios from "../axios";
+import {AxiosError} from "axios";
 export async function handleFetchWislist(id: string) {
     try {
         const response = await axios.get(`${OMDB_ENDPOINTS.GET_MY_WISHLIST}/${id}`);
@@ -9,7 +10,10 @@ export async function handleFetchWislist(id: string) {
         }
         return response.data;
     } catch (e) {
-        throw new Error("Something went wrong");
+        if (e instanceof AxiosError && e.response) {
+            throw new Error(e.response.data);
+        }
+        throw e;
     }
 }
 

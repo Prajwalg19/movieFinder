@@ -1,4 +1,4 @@
-export type movieSearchType = {
+export type movieSearchType = { // response on search for name, type, or year
     Title: string;
     Year: string | null;
     imdbID: string;
@@ -13,7 +13,7 @@ interface Rating {
     Value: string;
 }
 
-export interface movieSpecificType {
+export interface movieSpecificType { // response on search for specific movie using it's imdb id.
     Title: string;
     Year: string;
     Rated: string;
@@ -42,7 +42,7 @@ export interface movieSpecificType {
     Error?: String
 }
 
-export interface SearchParams {
+export interface SearchParams { // search params for OMDB API
     searchTerm: string;
     page: number;
     plot: string | null;

@@ -17,7 +17,7 @@ export function ProgressBar({movies, series, episodes}: {movies: number, series:
             {
                 series > 0 && (
                     <div style={{width: `${seriesPercentage}%`}} className="bg-green-400 flex items-center justify-center relative">
-                        <span className="absolute inset-0 flex items-center justify-center text-white text-sm truncate">{`S(${series})`}</span>
+                        <span className="absolute inset-0 flex items-center justify-center text-white text-sm truncate">{`S (${series})`}</span>
                     </div>
 
                 )

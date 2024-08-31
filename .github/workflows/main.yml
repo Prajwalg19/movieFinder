@@ -20,7 +20,7 @@ jobs:
    - name: Change directory to frontend
      run : cd frontend
    - name: Install dependancy
-     run: npm run install
+     run: npm install
    - name : Build
      run : npm build
    - name: push to production

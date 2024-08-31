@@ -16,7 +16,7 @@ jobs:
      with :
       aws-access-key-id : ${{secrets.AWS_ACCESS_KEY_ID}}
       aws-secret-key: ${{secrets.AWS_SECRET_KEY}}
-      region: ${{secret.REGION}}
+      region: ${{secrets.REGION}}
    - name: Change directory to frontend
      run : cd frontend
    - name: Install dependancy

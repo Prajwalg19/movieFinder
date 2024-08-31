@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
- deploy:
+ bingo:
   runs-on : ubuntu-latest
   steps:
    - name: Checkout
@@ -16,7 +16,7 @@ jobs:
      with :
       aws-access-key-id : ${{secrets.AWS_ACCESS_KEY_ID}}
       aws-secret-access-key: ${{secrets.AWS_SECRET_KEY}}
-      aws-region: us-east-1
+      region: us-east-1
    - name: Change directory to frontend
      run : cd frontend
    - name: Install dependancy

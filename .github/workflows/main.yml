@@ -15,8 +15,8 @@ jobs:
      uses: aws-actions/configure-aws-credentials@v1 
      with :
       aws-access-key-id : ${{secrets.AWS_ACCESS_KEY_ID}}
-      aws-secret-key: ${{secrets.AWS_SECRET_KEY}}
-      region: ${{secrets.REGION}}
+      aws-secret-access-key: ${{secrets.AWS_SECRET_KEY}}
+      aws-region: ${{secrets.REGION}}
    - name: Change directory to frontend
      run : cd frontend
    - name: Install dependancy

@@ -23,7 +23,7 @@ jobs:
      run: npm ci
      working-directory: ./frontend
    - name : Build
-     run : npm build
+     run : npm run build
      working-directory: ./frontend
    - name: push to production
      run : aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET}}

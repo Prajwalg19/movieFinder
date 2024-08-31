@@ -3,7 +3,7 @@ name: My first CI/CD Script
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
  deploy:

@@ -20,7 +20,7 @@ export default function Intro() {
                 </div>
                 <div className="flex flex-col sm:flex-row justify-around w-full gap-7 sm:gap-0 delay-4">
                     <Link to={user ? "/home" : "/login"} className="border py-3 w-full shadow-md sm:w-[220px] box-border whitespace-nowrap px-7 group bg-black rounded-sm text-white flex flex-row justify-center items-center hover:scale-105 transition gap-2 font-clashSemiBold tracking-wider">
-                        Get Started
+                        Let&apos;s Get Started
                         <span>
                             <HiArrowLongRight className="text-gray-300 text-2xl group-hover:translate-x-2 transition ease-in-out" />
                         </span>

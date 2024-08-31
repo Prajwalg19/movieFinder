@@ -1,0 +1,35 @@
+name: My first CI/CD Script
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+ bingo:
+  runs-on : ubuntu-latest
+  steps:
+   - name: Checkout
+     uses: actions/checkout@v1
+   - name: Configure AWS Credentials
+     uses: aws-actions/configure-aws-credentials@v1 
+     with :
+      aws-access-key-id : ${{secrets.AWS_ACCESS_KEY_ID}}
+      aws-secret-key: ${{secrets.AWS_SECRET_KEY}}
+      region: ${{secret.REGION}}
+   - name: Change directory to frontend
+   - run : cd frontend
+   - name: Install dependancy
+     run: npm ci
+   - name : Build
+     run : npm build
+   - name: push to production
+     run : aws s3 sync ./dist s3://${{secrets.AWS_S3_BUCKET}}
+   - name: CloudFront invalidation
+     run : aws cloudfront create-invalidation --distribution-id=${{secrets.DISTRIBUTION_ID}} --path="/*"
+      
+          
+    
+    
+
+

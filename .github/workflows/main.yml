@@ -18,7 +18,7 @@ jobs:
       aws-secret-key: ${{secrets.AWS_SECRET_KEY}}
       region: ${{secret.REGION}}
    - name: Change directory to frontend
-   - run : cd frontend
+     run : cd frontend
    - name: Install dependancy
      run: npm ci
    - name : Build

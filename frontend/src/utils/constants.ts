@@ -8,7 +8,6 @@ export const INFO_TEXT = {
         "Search for movies, series, and episodes by name or year of release.",
         "Read detailed plots and synopses.",
         "Discover cast and crew information.",
-        "Explore related movies and series based on your interests.",
         "Access ratings and reviews to help you decide what to watch next."
     ],
 

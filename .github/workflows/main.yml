@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
- bingo:
+ deploy-frontend:
   runs-on : ubuntu-latest
   steps:
    - name: Checkout
@@ -21,7 +21,11 @@ jobs:
      run : cd frontend
    - name: Install dependancy
      run: npm ci
-     working-directory: ./frontend
+   - name: Create .env for frontend
+     run : 
+       echo "VITE_OMDB_API_KEY=${{VITE_OMDB_API_KEY}}" > .env
+       echo "VITE_FIREBASE_API=${{VITE_FIREBASE_API}}" > .env
+     working-directory : ./frontend
    - name : Build
      run : npm run build
      working-directory: ./frontend

@@ -23,8 +23,8 @@ jobs:
      run: npm ci
    - name: Create .env for frontend
      run : 
-       echo "VITE_OMDB_API_KEY=${{VITE_OMDB_API_KEY}}" > .env
-       echo "VITE_FIREBASE_API=${{VITE_FIREBASE_API}}" > .env
+       echo "VITE_OMDB_API_KEY=${{secrets.VITE_OMDB_API_KEY}}" > .env
+       echo "VITE_FIREBASE_API=${{secrets.VITE_FIREBASE_API}}" > .env
      working-directory : ./frontend
    - name : Build
      run : npm run build

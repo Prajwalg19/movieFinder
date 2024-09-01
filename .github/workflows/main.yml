@@ -21,6 +21,7 @@ jobs:
      run : cd frontend
    - name: Install dependancy
      run: npm ci
+     working-directory: ./frontend
    - name: Create .env for frontend
      run : 
        echo "VITE_OMDB_API_KEY=${{secrets.VITE_OMDB_API_KEY}}" > .env

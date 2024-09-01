@@ -16,7 +16,7 @@ const port = process.env.PORT || 4500
 
 
 const corsOptions = {
-    origin: ["http://localhost:5173", "https://movie-finder-lyart.vercel.app"],
+    origin: ["http://localhost:5173", "https://movie-finder-lyart.vercel.app", "https://d29kwmevcoq2x9.cloudfront.net"],
     credentials: true
 }
 app.use(express.json());

@@ -14,18 +14,18 @@ export default function Footer() {
                     </div>
                     <div className="font-clashRegular tracking-wider flex items-center gap-3">
                         <BiSolidMessageDetail className="text-xl text-red-700" />
-                        <a href="mailto:prajw4l.g@gmail.com">prajw4l.g@gmail.com</a>
+                        <a href="mailto:demo@gmail.com">demo@gmail.com</a>
                     </div>
                     <div className="font-clashRegular tracking-wider flex items-center gap-3">
                         <FaPhone className="text-xl text-red-700" />
-                        <p>+91 7975158795</p>
+                        <p>+91 9999999999</p>
                     </div>
                 </section>
 
                 <Typo variant="body" className="flex flex-col items-center lg:items-start gap-5">
                     <Typo variant="h4" className="text-3xl font-clashSemiBold">Links</Typo>
                     <Link to="/">Home</Link>
-                    <a href="https://www.prajwal19.me">About Me</a>
+                    <a href="#">About Me</a>
                     <p >Contact</p>
                 </Typo>
 

@@ -44,7 +44,7 @@ export default function Footer() {
                 </Typo>
             </div>
             <hr className="my-10" />
-            <p className="text-center text-gray-600 text-xs dark:text-gray-300/90 font-clashSemiBold tracking-wider">Copyright 2024 Prajwal&copy;, All Rights Reserved</p>
+            <p className="text-center text-gray-600 text-xs dark:text-gray-300/90 font-clashSemiBold tracking-wider">Copyright 2024 &copy;, All Rights Reserved</p>
 
         </footer>
     );
